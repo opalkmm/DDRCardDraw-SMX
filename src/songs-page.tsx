@@ -1,3 +1,4 @@
+import { HTMLSelect } from "@blueprintjs/core";
 import { useContext, useState } from "preact/hooks";
 import { DrawStateContext } from "./draw-state";
 import { Song, Chart } from "./models/SongData";
@@ -7,7 +8,7 @@ import { useLocation } from "wouter-preact";
 import { Modal } from "./modal";
 import { MetaString } from "./game-data-utils";
 import { SongList } from "./song-list";
-import styles from "./songs-page.css";
+import styles from "./songs-page.module.css";
 
 function FlagsList({ flags }: { flags: string[] | undefined }) {
   return (
@@ -87,7 +88,7 @@ export function SongsPage() {
   return (
     <div className={styles.container}>
       <SongSearch onSongSelect={setSelectedSong} autofocus>
-        <select
+        <HTMLSelect
           value={flag}
           onInput={e => {
             setSelectedFlag(e.currentTarget.value);
@@ -99,7 +100,7 @@ export function SongsPage() {
               <MetaString field={f} />
             </option>
           ))}
-        </select>
+        </HTMLSelect>
       </SongSearch>
     </div>
   );

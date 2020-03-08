@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import styles from "./card-label.css";
+import styles from "./card-label.module.css";
 import { FunctionalComponent } from "preact";
 
 interface Props {

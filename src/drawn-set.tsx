@@ -1,6 +1,6 @@
 import { Component } from "preact";
 import { SongCard } from "./song-card";
-import styles from "./drawn-set.css";
+import styles from "./drawn-set.module.css";
 import {
   Drawing,
   DrawnChart,

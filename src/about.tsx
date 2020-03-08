@@ -3,7 +3,7 @@ import { FunctionComponent } from "preact";
 import { useContext } from "preact/hooks";
 import { TranslateContext } from "@denysvuika/preact-translate";
 import { Icon } from "./icon";
-import styles from "./about.css";
+import styles from "./about.module.css";
 
 import { Github, Facebook, Twitter } from "preact-feather";
 

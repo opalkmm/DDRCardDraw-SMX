@@ -1,5 +1,6 @@
+import { Navbar, Button } from "@blueprintjs/core";
 import { useRoute, Link } from "wouter-preact";
-import styles from "./header.css";
+import styles from "./header.module.css";
 
 export function Header() {
   const [_, params] = useRoute<{ dataSet: string }>("/:dataSet/:anything*");
@@ -8,14 +9,15 @@ export function Header() {
   }
   return (
     <header className={styles.header}>
-      <ul>
-        <li>
-          <Link href={`/${params.dataSet}`}>Browse</Link>
-        </li>
-        <li>
-          <Link href={`/${params.dataSet}/draw`}>Draw Songs</Link>
-        </li>
-      </ul>
+      <Navbar id="HeaderNav">
+        <Link href={`/${params.dataSet}`}>
+          <Button>Browse</Button>
+        </Link>
+
+        <Link href={`/${params.dataSet}/draw`}>
+          <Button>Draw Songs</Button>
+        </Link>
+      </Navbar>
     </header>
   );
 }

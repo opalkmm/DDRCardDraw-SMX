@@ -1,6 +1,6 @@
 import * as OfflinePluginRuntime from "offline-plugin/runtime";
 import { useState, useEffect, useContext } from "preact/hooks";
-import styles from "./update-manager.css";
+import styles from "./update-manager.module.css";
 import { TranslateContext } from "@denysvuika/preact-translate";
 
 export function UpdateManager() {

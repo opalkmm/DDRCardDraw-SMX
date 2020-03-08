@@ -3,6 +3,8 @@ if (process.env.NODE_ENV === "development") {
   // to exist at the top of a file.
   require("preact/debug");
 }
+import "normalize.css";
+import "@blueprintjs/core/lib/css/blueprint.css";
 
 import "./firebase";
 import { render } from "preact";
@@ -14,10 +16,11 @@ import { Footer } from "./footer";
 import { AuthManager } from "./auth";
 import { UpdateManager } from "./update-manager";
 import { DrawStateManager } from "./draw-state";
-import styles from "./app.css";
+import styles from "./app.module.css";
 import { ConfigStateManager } from "./config-state";
 import { SongsPage } from "./songs-page";
 import { Header } from "./header";
+import { useDarkThemePreference } from "./hooks/useDarkThemePreference";
 
 interface RedirectProps {
   replace?: boolean;
@@ -57,10 +60,19 @@ function App() {
   );
 }
 
+function ApplyDarkTheme() {
+  const prefersDark = useDarkThemePreference();
+  useEffect(() => {
+    document.body.classList.toggle("bp3-dark", prefersDark);
+  });
+  return null;
+}
+
 function AppShell() {
   return (
     <AuthManager>
       <ConfigStateManager>
+        <ApplyDarkTheme />
         <App />
         <Route path="/">
           <Redirect to="/a20" replace />

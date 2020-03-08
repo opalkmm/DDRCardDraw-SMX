@@ -1,9 +1,9 @@
 import classNames from "classnames";
 import { TranslateContext } from "@denysvuika/preact-translate";
 import { useContext, useRef, useState } from "preact/hooks";
-import globalStyles from "../app.css";
+import globalStyles from "../app.module.css";
 import { WeightsControls } from "./controls-weights";
-import styles from "./controls.css";
+import styles from "./controls.module.css";
 import { DrawStateContext } from "../draw-state";
 import { JSXInternal } from "preact/src/jsx";
 import { ConfigStateContext } from "../config-state";

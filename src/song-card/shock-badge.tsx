@@ -1,7 +1,7 @@
 import { TranslateContext } from "@denysvuika/preact-translate";
 import { Zap } from "preact-feather";
 import { useContext } from "preact/hooks";
-import styles from "./shock-badge.css";
+import styles from "./shock-badge.module.css";
 
 export function ShockBadge() {
   const { t } = useContext(TranslateContext);

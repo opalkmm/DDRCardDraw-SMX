@@ -3,7 +3,7 @@ import { Edit, Lock, RotateCcw, Slash, X } from "preact-feather";
 import { useContext, useState } from "preact/hooks";
 import { Icon } from "../icon";
 import { SongSearch } from "../song-search";
-import styles from "./icon-menu.css";
+import styles from "./icon-menu.module.css";
 import { JSX } from "preact";
 import { DrawnChart } from "../models/Drawing";
 import { getDrawnChart } from "../card-draw";

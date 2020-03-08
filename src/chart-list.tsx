@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import { MetaString, AbbrDifficulty } from "./game-data-utils";
 import { useDifficultyColor } from "./hooks/useDifficultyColor";
-import styles from "./chart-list.css";
+import styles from "./chart-list.module.css";
 import { Chart, Song } from "./models/SongData";
 import { useChartFilter } from "./hooks/useChartFilter";
 import { ShockBadge } from "./song-card/shock-badge";

@@ -1,6 +1,6 @@
 import { useContext } from "preact/hooks";
 import { DrawnSet } from "./drawn-set";
-import styles from "./drawing-list.css";
+import styles from "./drawing-list.module.css";
 import { DrawStateContext } from "./draw-state";
 import { Drawing } from "./models/Drawing";
 import { memo } from "preact/compat/src";

@@ -1,6 +1,7 @@
+import { InputGroup } from "@blueprintjs/core";
 import { useContext, useState, useRef, useLayoutEffect } from "preact/hooks";
 import { DrawStateContext } from "./draw-state";
-import styles from "./song-search.css";
+import styles from "./song-search.module.css";
 import { Song, Chart } from "./models/SongData";
 import { SongList } from "./song-list";
 import { RenderableProps } from "preact";
@@ -24,12 +25,12 @@ export function SongSearch(props: RenderableProps<Props>) {
   const [searchTerm, updateSearchTerm] = useState("");
 
   const { fuzzySearch } = useContext(DrawStateContext);
-  const input = useRef<HTMLInputElement>();
-  useLayoutEffect(() => {
-    if (autofocus && input.current) {
-      input.current!.focus();
-    }
-  }, []);
+  // const input = useRef<HTMLInputElement>();
+  // useLayoutEffect(() => {
+  //   if (autofocus && input.current) {
+  //     input.current!.focus();
+  //   }
+  // }, []);
 
   let results: Song[] = [];
   if (fuzzySearch && searchTerm) {
@@ -39,10 +40,10 @@ export function SongSearch(props: RenderableProps<Props>) {
   return (
     <>
       <div className={styles.input}>
-        <input
+        <InputGroup
           placeholder="Search for a song"
-          ref={input}
           type="search"
+          autoFocus={autofocus}
           onKeyUp={e => {
             if (e.keyCode === 27) {
               e.preventDefault();

@@ -10,6 +10,10 @@ body {
   margin: 0;
 }
 
+body:global(.bp3-dark) {
+  background-color: #222;
+}
+
 .container {
   display: flex;
   flex-direction: column;

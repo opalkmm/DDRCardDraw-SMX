@@ -50,7 +50,11 @@ module.exports = function(env = {}, argv = {}) {
       modules: false
     },
     resolve: {
-      extensions: [".js", ".jsx", ".ts", ".tsx", ".css", ".json"]
+      extensions: [".js", ".jsx", ".ts", ".tsx", ".css", ".json"],
+      alias: {
+        react: "preact/compat",
+        "react-dom": "preact/compat"
+      }
     },
     module: {
       rules: [
@@ -87,8 +91,7 @@ module.exports = function(env = {}, argv = {}) {
           }
         },
         {
-          test: /\.css$/,
-          exclude: /node_modules/,
+          test: /\.module\.css$/,
           use: [
             MiniCssExtractPlugin.loader,
             {
@@ -96,8 +99,8 @@ module.exports = function(env = {}, argv = {}) {
               options: {
                 modules: {
                   localIdentName: "[local]__[hash:base64:5]"
-                },
-                importLoaders: 1
+                }
+                // importLoaders: 1
               }
             },
             {
@@ -108,6 +111,11 @@ module.exports = function(env = {}, argv = {}) {
               }
             }
           ]
+        },
+        {
+          test: /\.css$/,
+          exclude: /\.module\.css$/,
+          use: [MiniCssExtractPlugin.loader, "css-loader"]
         },
         {
           test: /\.svg$/,

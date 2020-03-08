@@ -5,7 +5,7 @@ import {
 } from "preact/compat";
 import { Icon } from "./icon";
 import { X } from "preact-feather";
-import styles from "./modal.css";
+import styles from "./modal.module.css";
 
 const modalRoot = document.createElement("div");
 // modalRoot.className = styles.modalRoot;

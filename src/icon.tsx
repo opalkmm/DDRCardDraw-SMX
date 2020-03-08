@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import styles from "./icon.css";
+import styles from "./icon.module.css";
 import { JSX } from "preact";
 
 interface Props {

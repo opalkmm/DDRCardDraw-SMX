@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import { detectedLanguage } from "./utils";
-import styles from "./footer.css";
-import globalStyles from "./app.css";
+import styles from "./footer.module.css";
+import globalStyles from "./app.module.css";
 import { AuthButton } from "./auth-button";
 import { useContext, useState } from "preact/hooks";
 import { TranslateContext } from "@denysvuika/preact-translate";

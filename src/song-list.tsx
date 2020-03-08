@@ -1,7 +1,7 @@
 import cn from "classnames";
 import { Song, Chart } from "./models/SongData";
 import { ChartList } from "./chart-list";
-import styles from "./song-list.css";
+import styles from "./song-list.module.css";
 
 interface Props {
   songs: Song[];

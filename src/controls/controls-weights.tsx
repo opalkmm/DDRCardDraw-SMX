@@ -1,9 +1,8 @@
 import { Component } from "preact";
-import styles from "./controls-weights.css";
+import styles from "./controls-weights.module.css";
 import { times } from "../utils";
 import { TranslateContext } from "@denysvuika/preact-translate";
-import { useState, useMemo, useContext } from "preact/hooks";
-import { UncontrolledCheckbox } from "../uncontrolled";
+import { useMemo, useContext } from "preact/hooks";
 import { ConfigStateContext } from "../config-state";
 
 interface Props {
