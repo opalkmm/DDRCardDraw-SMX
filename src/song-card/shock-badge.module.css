@@ -3,8 +3,8 @@
   border: 1px solid black;
   padding: 1px;
   border-radius: 50%;
-  height: 1em;
-  min-width: 1em;
+  height: 1.3em;
+  min-width: 1.3em;
   display: inline-block;
   text-align: center;
 }

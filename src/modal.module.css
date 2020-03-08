@@ -15,6 +15,10 @@
   position: relative;
 }
 
+:global(.bp3-dark) .modalContents {
+  background-color: #333;
+}
+
 .close {
   position: absolute;
   font-size: 18px;

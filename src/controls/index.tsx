@@ -8,6 +8,14 @@ import { DrawStateContext } from "../draw-state";
 import { JSXInternal } from "preact/src/jsx";
 import { ConfigStateContext } from "../config-state";
 import { useLocation } from "wouter-preact";
+import {
+  HTMLSelect,
+  FormGroup,
+  NumericInput,
+  Checkbox,
+  Button
+} from "@blueprintjs/core";
+import { Check } from "preact-feather";
 
 function preventDefault(e: Event) {
   e.preventDefault();
@@ -15,7 +23,7 @@ function preventDefault(e: Event) {
 
 export function Controls() {
   const form = useRef<HTMLFormElement>();
-  const [collapsed, setCollapsed] = useState(true);
+  const [collapsed, setCollapsed] = useState(false);
   const { t } = useContext(TranslateContext);
   const [location, setLocation] = useLocation();
   const { drawSongs, dataSetName, lastDrawFailed, gameData } = useContext(
@@ -37,9 +45,7 @@ export function Controls() {
   }
   const { difficulties, flags, lvlMax, styles: gameStyles } = gameData.meta;
 
-  const handleLowerBoundChange = (
-    e: JSXInternal.TargetedEvent<HTMLInputElement>
-  ) => {
+  const handleLowerBoundChange = (e: { currentTarget: HTMLInputElement }) => {
     const newValue = parseInt(e.currentTarget.value, 10);
     if (newValue > upperBound) {
       return;
@@ -52,9 +58,7 @@ export function Controls() {
     });
   };
 
-  const handleUpperBoundChange = (
-    e: JSXInternal.TargetedEvent<HTMLInputElement>
-  ) => {
+  const handleUpperBoundChange = (e: { currentTarget: HTMLInputElement }) => {
     const newValue = parseInt(e.currentTarget.value, 10);
     if (newValue < lowerBound) {
       return;
@@ -67,13 +71,11 @@ export function Controls() {
     });
   };
 
-  const handleSongListChange = (
-    e: JSXInternal.TargetedEvent<HTMLSelectElement>
-  ) => {
-    setLocation(`/${e.currentTarget.value}`);
+  const handleSongListChange = (v: string) => {
+    setLocation(`/${v}`);
   };
 
-  const handleRandomize = (e: JSXInternal.TargetedEvent<HTMLButtonElement>) => {
+  const handleRandomize = (e: { preventDefault(): void }) => {
     e.preventDefault();
     drawSongs(configState);
   };
@@ -86,134 +88,112 @@ export function Controls() {
     >
       <section className={styles.columns}>
         <div className={styles.column}>
-          <div className={styles.group}>
-            <label>
-              {t("dataSource")}:{" "}
-              <select
-                name="dataSource"
-                onChange={handleSongListChange}
-                value={dataSetName}
-              >
-                <option value="a20">A20</option>
-                <option value="ace">Ace</option>
-                <option value="extreme">Extreme</option>
-                <option value="drs">DANCERUSH</option>
-              </select>
-            </label>
-          </div>
-          <div className={styles.group}>
-            <label>
-              {t("chartCount")}:{" "}
-              <input
-                type="number"
-                name="chartCount"
-                value={chartCount}
-                min="1"
-                onInput={e => {
-                  updateState(s => {
-                    return { ...s, chartCount: +e.currentTarget.value };
-                  });
-                }}
-              />
-            </label>
-          </div>
-          <div className={styles.group}>
-            {t("difficultyLevel")}:
-            <label>
-              {t("upperBound")}:
-              <input
-                type="number"
-                name="upperBound"
+          <FormGroup labelFor="dataSource" label={t("dataSource")}>
+            <HTMLSelect
+              id="dataSource"
+              onChange={e => handleSongListChange(e.currentTarget.value)}
+              value={dataSetName}
+            >
+              <option value="a20">A20</option>
+              <option value="ace">Ace</option>
+              <option value="extreme">Extreme</option>
+              <option value="drs">DANCERUSH</option>
+            </HTMLSelect>
+          </FormGroup>
+          <FormGroup labelFor="chartCount" label={t("chartCount")}>
+            <NumericInput
+              // type="number"
+              id="chartCount"
+              value={chartCount}
+              min={1}
+              onInput={e => {
+                updateState(s => {
+                  return { ...s, chartCount: +e.currentTarget.value };
+                });
+              }}
+            />
+          </FormGroup>
+          <FormGroup label={t("difficultyLevel")}>
+            <FormGroup labelFor="upperBound" label={t("upperBound")}>
+              <NumericInput
+                id="upperBound"
                 onChange={handleUpperBoundChange}
                 value={upperBound}
                 min={lowerBound}
                 max={lvlMax}
               />
-            </label>
-            <label>
-              {t("lowerBound")}:
-              <input
-                type="number"
-                name="lowerBound"
+            </FormGroup>
+            <FormGroup labelFor="lowerBound" label={t("lowerBound")}>
+              <NumericInput
+                id="lowerBound"
                 onChange={handleLowerBoundChange}
                 value={lowerBound}
-                min="1"
+                min={1}
                 max={upperBound}
               />
-            </label>
-          </div>
-          <div className={styles.group}>
-            <label>
-              <input
-                type="checkbox"
-                name="weighted"
-                checked={useWeights}
-                onChange={e =>
-                  updateState(state => ({
-                    ...state,
-                    useWeights: !!e.currentTarget.checked
-                  }))
-                }
-              />
-              {t("useWeightedDistributions")}
-            </label>
-          </div>
+            </FormGroup>
+          </FormGroup>
+          <FormGroup>
+            <Checkbox
+              id="weighted"
+              checked={useWeights}
+              onChange={e =>
+                updateState(state => ({
+                  ...state,
+                  useWeights: !!e.currentTarget.checked
+                }))
+              }
+              label={t("useWeightedDistributions")}
+            />
+          </FormGroup>
         </div>
         <div className={styles.column}>
-          <div className={styles.group}>
-            <label>
-              {t("style")}{" "}
-              <select
-                name="style"
-                value={selectedStyle}
+          <FormGroup labelFor="style" label={t("style")}>
+            <HTMLSelect
+              id="style"
+              value={selectedStyle}
+              onInput={e => {
+                updateState(s => {
+                  return { ...s, style: e.currentTarget.value };
+                });
+              }}
+            >
+              {gameStyles.map(style => (
+                <option key={style} value={style}>
+                  {t("meta." + style)}
+                </option>
+              ))}
+            </HTMLSelect>
+          </FormGroup>
+          <FormGroup label={t("difficulties")}>
+            {difficulties.map(dif => (
+              <Checkbox
+                key={`${dataSetName}:${dif.key}`}
+                name="difficulties"
+                value={dif.key}
+                checked={selectedDifficulties.has(dif.key)}
                 onInput={e => {
                   updateState(s => {
-                    return { ...s, style: e.currentTarget.value };
+                    const difficulties = new Set(s.difficulties);
+                    if (e.currentTarget.checked) {
+                      difficulties.add(e.currentTarget.value);
+                    } else {
+                      difficulties.delete(e.currentTarget.value);
+                    }
+                    return { ...s, difficulties };
                   });
                 }}
-              >
-                {gameStyles.map(style => (
-                  <option key={style} value={style}>
-                    {t("meta." + style)}
-                  </option>
-                ))}
-              </select>
-            </label>
-          </div>
-          <div className={styles.group}>
-            {t("difficulties")}:
-            {difficulties.map(dif => (
-              <label key={`${dataSetName}:${dif.key}`}>
-                <input
-                  type="checkbox"
-                  name="difficulties"
-                  value={dif.key}
-                  checked={selectedDifficulties.has(dif.key)}
-                  onInput={e => {
-                    updateState(s => {
-                      const difficulties = new Set(s.difficulties);
-                      if (e.currentTarget.checked) {
-                        difficulties.add(e.currentTarget.value);
-                      } else {
-                        difficulties.delete(e.currentTarget.value);
-                      }
-                      return { ...s, difficulties };
-                    });
-                  }}
-                />
-                {t("meta." + dif.key)}
-              </label>
+                label={t("meta." + dif.key)}
+              />
             ))}
-          </div>
+          </FormGroup>
         </div>
         <div className={styles.column}>
           {!!flags.length && (
-            <div className={styles.group}>
-              {t("include")}:
+            <FormGroup label={t("include")}>
               {flags.map(key => (
                 <label key={`${dataSetName}:${key}`}>
-                  <input
-                    type="checkbox"
+                  <Checkbox
                     name="inclusions"
                     value={key}
                     checked={selectedFlags.has(key)}
@@ -228,17 +208,17 @@ export function Controls() {
                         return { ...s, flags: newFlags };
                       })
                     }
+                    label={t("meta." + key)}
                   />
-                  {t("meta." + key)}
                 </label>
               ))}
-            </div>
+            </FormGroup>
           )}
           <div className={classNames(globalStyles.padded, styles.buttons)}>
-            <button onClick={handleRandomize}>{t("draw")}</button>{" "}
-            <button onClick={() => setCollapsed(!collapsed)}>
+            <Button onClick={handleRandomize}>{t("draw")}</Button>{" "}
+            <Button onClick={() => setCollapsed(!collapsed)}>
               {t(collapsed ? "controls.show" : "controls.hide")}
-            </button>
+            </Button>
           </div>
           {!!lastDrawFailed && <div>{t("controls.invalid")}</div>}
         </div>
