@@ -14,7 +14,6 @@ import {
   Intent
 } from "@blueprintjs/core";
 import { useTranslateFunc } from "../hooks/useTranslateFunc";
-import { useHistory } from "react-router-dom";
 import { IconNames } from "@blueprintjs/icons";
 
 function preventDefault(e: { preventDefault(): void }) {
@@ -23,7 +22,7 @@ function preventDefault(e: { preventDefault(): void }) {
 
 export function Controls() {
   const form = useRef<HTMLFormElement | null>(null);
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(true);
   const { t } = useTranslateFunc();
   const { drawSongs, lastDrawFailed, gameData } = useContext(DrawStateContext);
   const configState = useContext(ConfigStateContext);

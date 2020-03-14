@@ -10,7 +10,8 @@ import {
   NavbarGroup,
   Button,
   NavbarHeading,
-  Alignment
+  Alignment,
+  Dialog
 } from "@blueprintjs/core";
 
 // note that month is zero-indexed for date constructor :)
@@ -22,7 +23,13 @@ export function Footer() {
 
   return (
     <Navbar className={styles.footer}>
-      {showAbout && <About onClose={() => updateShowAbout(false)} />}
+      <Dialog
+        onClose={() => updateShowAbout(false)}
+        isOpen={showAbout}
+        title={t("about.header")}
+      >
+        <About />
+      </Dialog>
       <NavbarGroup>
         <NavbarHeading>
           {t("lastUpdate", {

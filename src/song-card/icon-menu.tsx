@@ -3,10 +3,9 @@ import { SongSearch } from "../song-search";
 import styles from "./icon-menu.module.css";
 import { DrawnChart } from "../models/Drawing";
 import { getDrawnChart } from "../card-draw";
-import { Modal } from "../modal";
 import { useTranslateFunc } from "../hooks/useTranslateFunc";
 import { IconNames, IconName } from "@blueprintjs/icons";
-import { Button } from "@blueprintjs/core";
+import { Button, Dialog } from "@blueprintjs/core";
 
 interface Props {
   onPocketPicked: (p: 1 | 2, chart: DrawnChart) => void;
@@ -29,21 +28,6 @@ export function IconMenu(props: Props) {
 
   const { t } = useTranslateFunc();
   const [playerPickingPocket, setPickingPocket] = useState<0 | 1 | 2>(0);
-
-  if (playerPickingPocket) {
-    return (
-      <Modal onClose={() => setPickingPocket(0)}>
-        <SongSearch
-          autofocus
-          showCharts
-          filterCharts
-          onChartSelect={(song, chart) =>
-            onPocketPicked(playerPickingPocket, getDrawnChart(song, chart))
-          }
-        />
-      </Modal>
-    );
-  }
 
   if (onlyReset) {
     return (
@@ -70,6 +54,22 @@ export function IconMenu(props: Props) {
 
   return (
     <div className={styles.iconMenu} onClick={e => e.stopPropagation()}>
+      <Dialog
+        onClose={() => setPickingPocket(0)}
+        isOpen={!!playerPickingPocket}
+      >
+        <SongSearch
+          autofocus
+          showCharts
+          filterCharts
+          onChartSelect={(song, chart) =>
+            onPocketPicked(
+              playerPickingPocket as 1 | 2,
+              getDrawnChart(song, chart)
+            )
+          }
+        />
+      </Dialog>
       <header className={styles.iconRow}>
         <div>P1</div>
         <Button

@@ -1,9 +1,8 @@
-import { HTMLSelect, UL } from "@blueprintjs/core";
+import { HTMLSelect, UL, Dialog } from "@blueprintjs/core";
 import { useContext, useState } from "react";
 import { DrawStateContext } from "./draw-state";
-import { Song, Chart } from "./models/SongData";
+import { Chart } from "./models/SongData";
 import { ChartList } from "./chart-list";
-import { Modal } from "./modal";
 import { MetaString } from "./game-data-utils";
 import { SongList } from "./song-list";
 import styles from "./songs-page.module.css";
@@ -70,26 +69,26 @@ export function SongsPage() {
     return <div>No game data loaded yet</div>;
   }
 
-  if (flag) {
-    return (
-      <Modal onClose={() => setSelectedFlag(undefined)}>
-        <h1>
-          <MetaString field={flag} />
-        </h1>
-        <SongList
-          songs={gameData.songs.filter(song => {
-            return (
-              song.flags?.includes(flag) ||
-              song.charts.some(chart => chart.flags?.includes(flag))
-            );
-          })}
-        />
-      </Modal>
-    );
-  }
-
   return (
     <div className={styles.container}>
+      <Dialog
+        isOpen={!!flag}
+        title={flag && <MetaString field={flag} />}
+        onClose={() => setSelectedFlag(undefined)}
+      >
+        {flag && (
+          <div style={{ overflowY: "auto", maxHeight: "80vh" }}>
+            <SongList
+              songs={gameData.songs.filter(song => {
+                return (
+                  song.flags?.includes(flag) ||
+                  song.charts.some(chart => chart.flags?.includes(flag))
+                );
+              })}
+            />
+          </div>
+        )}
+      </Dialog>
       <HTMLSelect
         value=""
         onInput={e => {
