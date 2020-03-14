@@ -1,14 +1,9 @@
-if (process.env.NODE_ENV === "development") {
-  // Must use require here as import statements are only allowed
-  // to exist at the top of a file.
-  require("preact/debug");
-}
 import "normalize.css";
 import "@blueprintjs/core/lib/css/blueprint.css";
 
 import "./firebase";
-import { render } from "preact";
-import { useEffect } from "preact/hooks";
+import { render } from "react-dom";
+import { useEffect } from "react";
 import { Route, Switch, useLocation, useRoute } from "wouter-preact";
 import { Controls } from "./controls";
 import { DrawingList } from "./drawing-list";

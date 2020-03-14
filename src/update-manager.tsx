@@ -1,10 +1,10 @@
 import * as OfflinePluginRuntime from "offline-plugin/runtime";
-import { useState, useEffect, useContext } from "preact/hooks";
+import { useState, useEffect, useContext } from "react";
 import styles from "./update-manager.module.css";
-import { TranslateContext } from "@denysvuika/preact-translate";
+import { useIntl } from "react-intl";
 
 export function UpdateManager() {
-  const { t } = useContext(TranslateContext);
+  const { formatMessage: t } = useIntl();
   const [updateStatus, setStatus] = useState<null | "loading" | "ready">(null);
   useEffect(() => {
     if (process.env.NODE_ENV === "production") {
@@ -22,9 +22,11 @@ export function UpdateManager() {
 
   switch (updateStatus) {
     case "loading":
-      return <p className={styles.updateBanner}>{t("updateLoading")}</p>;
+      return (
+        <p className={styles.updateBanner}>{t({ id: "updateLoading" })}</p>
+      );
     case "ready":
-      return <p className={styles.updateBanner}>{t("updateReady")}</p>;
+      return <p className={styles.updateBanner}>{t({ id: "updateReady" })}</p>;
     default:
       return null;
   }

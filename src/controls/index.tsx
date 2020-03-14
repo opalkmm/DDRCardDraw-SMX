@@ -1,11 +1,10 @@
 import classNames from "classnames";
-import { TranslateContext } from "@denysvuika/preact-translate";
-import { useContext, useRef, useState } from "preact/hooks";
+import { useIntl } from "react-intl";
+import { useContext, useRef, useState } from "react";
 import globalStyles from "../app.module.css";
 import { WeightsControls } from "./controls-weights";
 import styles from "./controls.module.css";
 import { DrawStateContext } from "../draw-state";
-import { JSXInternal } from "preact/src/jsx";
 import { ConfigStateContext } from "../config-state";
 import { useLocation } from "wouter-preact";
 import {
@@ -15,16 +14,15 @@ import {
   Checkbox,
   Button
 } from "@blueprintjs/core";
-import { Check } from "preact-feather";
 
-function preventDefault(e: Event) {
+function preventDefault(e: { preventDefault(): void }) {
   e.preventDefault();
 }
 
 export function Controls() {
   const form = useRef<HTMLFormElement>();
   const [collapsed, setCollapsed] = useState(false);
-  const { t } = useContext(TranslateContext);
+  const { formatMessage: t } = useIntl();
   const [location, setLocation] = useLocation();
   const { drawSongs, dataSetName, lastDrawFailed, gameData } = useContext(
     DrawStateContext
@@ -88,7 +86,7 @@ export function Controls() {
     >
       <section className={styles.columns}>
         <div className={styles.column}>
-          <FormGroup labelFor="dataSource" label={t("dataSource")}>
+          <FormGroup labelFor="dataSource" label={t({ id: "dataSource" })}>
             <HTMLSelect
               id="dataSource"
               onChange={e => handleSongListChange(e.currentTarget.value)}
@@ -100,7 +98,7 @@ export function Controls() {
               <option value="drs">DANCERUSH</option>
             </HTMLSelect>
           </FormGroup>
-          <FormGroup labelFor="chartCount" label={t("chartCount")}>
+          <FormGroup labelFor="chartCount" label={t({ id: "chartCount" })}>
             <NumericInput
               // type="number"
               id="chartCount"
@@ -113,8 +111,8 @@ export function Controls() {
               }}
             />
           </FormGroup>
-          <FormGroup label={t("difficultyLevel")}>
-            <FormGroup labelFor="upperBound" label={t("upperBound")}>
+          <FormGroup label={t({ id: "difficultyLevel" })}>
+            <FormGroup labelFor="upperBound" label={t({ id: "upperBound" })}>
               <NumericInput
                 id="upperBound"
                 onChange={handleUpperBoundChange}
@@ -123,7 +121,7 @@ export function Controls() {
                 max={lvlMax}
               />
             </FormGroup>
-            <FormGroup labelFor="lowerBound" label={t("lowerBound")}>
+            <FormGroup labelFor="lowerBound" label={t({ id: "lowerBound" })}>
               <NumericInput
                 id="lowerBound"
                 onChange={handleLowerBoundChange}
@@ -143,12 +141,12 @@ export function Controls() {
                   useWeights: !!e.currentTarget.checked
                 }))
               }
-              label={t("useWeightedDistributions")}
+              label={t({ id: "useWeightedDistributions" })}
             />
           </FormGroup>
         </div>
         <div className={styles.column}>
-          <FormGroup labelFor="style" label={t("style")}>
+          <FormGroup labelFor="style" label={t({ id: "style" })}>
             <HTMLSelect
               id="style"
               value={selectedStyle}
@@ -160,12 +158,12 @@ export function Controls() {
             >
               {gameStyles.map(style => (
                 <option key={style} value={style}>
-                  {t("meta." + style)}
+                  {t({ id: "meta." + style })}
                 </option>
               ))}
             </HTMLSelect>
           </FormGroup>
-          <FormGroup label={t("difficulties")}>
+          <FormGroup label={t({ id: "difficulties" })}>
             {difficulties.map(dif => (
               <Checkbox
                 key={`${dataSetName}:${dif.key}`}
@@ -183,14 +181,14 @@ export function Controls() {
                     return { ...s, difficulties };
                   });
                 }}
-                label={t("meta." + dif.key)}
+                label={t({ id: "meta." + dif.key })}
               />
             ))}
           </FormGroup>
         </div>
         <div className={styles.column}>
           {!!flags.length && (
-            <FormGroup label={t("include")}>
+            <FormGroup label={t({ id: "include" })}>
               {flags.map(key => (
                 <label key={`${dataSetName}:${key}`}>
                   <Checkbox
@@ -208,19 +206,19 @@ export function Controls() {
                         return { ...s, flags: newFlags };
                       })
                     }
-                    label={t("meta." + key)}
+                    label={t({ id: "meta." + key })}
                   />
                 </label>
               ))}
             </FormGroup>
           )}
           <div className={classNames(globalStyles.padded, styles.buttons)}>
-            <Button onClick={handleRandomize}>{t("draw")}</Button>{" "}
+            <Button onClick={handleRandomize}>{t({ id: "draw" })}</Button>{" "}
             <Button onClick={() => setCollapsed(!collapsed)}>
-              {t(collapsed ? "controls.show" : "controls.hide")}
+              {t({ id: collapsed ? "controls.show" : "controls.hide" })}
             </Button>
           </div>
-          {!!lastDrawFailed && <div>{t("controls.invalid")}</div>}
+          {!!lastDrawFailed && <div>{t({ id: "controls.invalid" })}</div>}
         </div>
       </section>
 

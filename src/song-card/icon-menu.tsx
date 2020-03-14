@@ -1,10 +1,9 @@
-import { TranslateContext } from "@denysvuika/preact-translate";
-import { Edit, Lock, RotateCcw, Slash, X } from "preact-feather";
-import { useContext, useState } from "preact/hooks";
+import { useIntl } from "react-intl";
+// import { Edit, Lock, RotateCcw, Slash, X } from "preact-feather";
+import { useContext, useState } from "react";
 import { Icon } from "../icon";
 import { SongSearch } from "../song-search";
 import styles from "./icon-menu.module.css";
-import { JSX } from "preact";
 import { DrawnChart } from "../models/Drawing";
 import { getDrawnChart } from "../card-draw";
 import { Modal } from "../modal";
@@ -28,7 +27,8 @@ export function IconMenu(props: Props) {
     onReset
   } = props;
 
-  const { t } = useContext(TranslateContext);
+  const { formatMessage } = useIntl();
+  const t = (id: string) => formatMessage({ id });
   const [playerPickingPocket, setPickingPocket] = useState<0 | 1 | 2>(0);
 
   if (playerPickingPocket) {

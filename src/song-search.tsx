@@ -1,10 +1,15 @@
 import { InputGroup } from "@blueprintjs/core";
-import { useContext, useState, useRef, useLayoutEffect } from "preact/hooks";
+import {
+  useContext,
+  useState,
+  useRef,
+  useLayoutEffect,
+  PropsWithChildren
+} from "react";
 import { DrawStateContext } from "./draw-state";
 import styles from "./song-search.module.css";
 import { Song, Chart } from "./models/SongData";
 import { SongList } from "./song-list";
-import { RenderableProps } from "preact";
 
 interface Props {
   autofocus?: boolean;
@@ -14,7 +19,7 @@ interface Props {
   showCharts?: boolean;
 }
 
-export function SongSearch(props: RenderableProps<Props>) {
+export function SongSearch(props: PropsWithChildren<Props>) {
   const {
     autofocus,
     onChartSelect,

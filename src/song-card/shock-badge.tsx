@@ -1,12 +1,12 @@
-import { TranslateContext } from "@denysvuika/preact-translate";
+import { useIntl } from "react-intl";
 import { Zap } from "preact-feather";
-import { useContext } from "preact/hooks";
+import { useContext } from "react";
 import styles from "./shock-badge.module.css";
 
 export function ShockBadge() {
-  const { t } = useContext(TranslateContext);
+  const { formatMessage: t } = useIntl();
   return (
-    <div className={styles.shockBadge} title={t("shockArrows")}>
+    <div className={styles.shockBadge} title={t({ id: "shockArrows" })}>
       <Zap size={12} aria-hidden color="black" fill="yellow" stroke-width="1" />
     </div>
   );

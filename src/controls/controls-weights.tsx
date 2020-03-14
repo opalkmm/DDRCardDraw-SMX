@@ -1,8 +1,7 @@
-import { Component } from "preact";
+import { Component, useMemo, useContext } from "react";
 import styles from "./controls-weights.module.css";
 import { times } from "../utils";
-import { TranslateContext } from "@denysvuika/preact-translate";
-import { useMemo, useContext } from "preact/hooks";
+import { useIntl } from "react-intl";
 import { ConfigStateContext } from "../config-state";
 
 interface Props {
@@ -14,7 +13,7 @@ export class WeightsControls extends Component<Props> {
   render() {
     const { high, low } = this.props;
 
-    const { t } = useContext(TranslateContext);
+    const { formatMessage: t } = useIntl();
     const { weights, update, forceDistribution } = useContext(
       ConfigStateContext
     );
@@ -55,7 +54,7 @@ export class WeightsControls extends Component<Props> {
 
     return (
       <section className={styles.weights}>
-        <p>{t("weights.explanation")}</p>
+        <p>{t({ id: "weights.explanation" })}</p>
         {levels.map((level, i) => (
           <label key={level}>
             <input
@@ -69,14 +68,14 @@ export class WeightsControls extends Component<Props> {
             {level} <sub>{percentages[i]}%</sub>
           </label>
         ))}
-        <label title={t("weights.check.title")}>
+        <label title={t({ id: "weights.check.title" })}>
           <input
             type="checkbox"
             name="limitOutliers"
             checked={forceDistribution}
             onChange={toggleForceDistribution}
           />
-          {t("weights.check.label")}
+          {t({ id: "weights.check.label" })}
         </label>
       </section>
     );

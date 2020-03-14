@@ -1,5 +1,5 @@
 import { Song, Chart } from "../models/SongData";
-import { useCallback, useContext } from "preact/hooks";
+import { useCallback, useContext } from "react";
 import { ConfigState, ConfigStateContext } from "../config-state";
 
 type ChartFilter = (song: Song, chart: Chart) => boolean;

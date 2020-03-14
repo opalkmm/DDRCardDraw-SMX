@@ -1,9 +1,8 @@
-import { useContext } from "preact/hooks";
+import { useContext, memo } from "react";
 import { DrawnSet } from "./drawn-set";
 import styles from "./drawing-list.module.css";
 import { DrawStateContext } from "./draw-state";
 import { Drawing } from "./models/Drawing";
-import { memo } from "preact/compat/src";
 
 const renderDrawing = (drawing: Drawing) => (
   <DrawnSet key={drawing.id} drawing={drawing} />

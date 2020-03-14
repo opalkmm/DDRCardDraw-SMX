@@ -1,5 +1,5 @@
 import * as firebase from "firebase/app";
-import { createContext, Component } from "preact";
+import { createContext, Component } from "react";
 
 interface AuthContextValue {
   status: "missing" | "unresolved" | "resolved";

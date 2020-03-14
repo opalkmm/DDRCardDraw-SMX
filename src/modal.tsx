@@ -1,8 +1,4 @@
-import {
-  createPortal,
-  FunctionComponent,
-  useLayoutEffect
-} from "preact/compat";
+import { createPortal, FunctionComponent, useLayoutEffect } from "react";
 import { Icon } from "./icon";
 import { X } from "preact-feather";
 import styles from "./modal.module.css";

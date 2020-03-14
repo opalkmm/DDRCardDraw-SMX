@@ -1,11 +1,10 @@
-import { createContext, Component } from "preact";
+import { createContext, Component } from "react";
 import { UnloadHandler } from "./unload-handler";
 import { draw } from "./card-draw";
 import { Drawing } from "./models/Drawing";
 import FuzzySearch from "fuzzy-search";
 import { GameData, Song } from "./models/SongData";
-import { TranslateProvider } from "@denysvuika/preact-translate";
-import { LanguageData } from "@denysvuika/preact-translate/src/languageData";
+import { IntlProvider } from "react-intl";
 import i18nData from "./assets/i18n.json";
 import { detectedLanguage } from "./utils";
 import { ApplyDefaultConfig } from "./apply-default-config";
@@ -57,7 +56,7 @@ export class DrawStateManager extends Component<Props, DrawState> {
   }
 
   render() {
-    const translations: LanguageData = {};
+    const translations: Record<string, string> = {};
     for (const lang in i18nData as LanguageData) {
       // @ts-ignore
       translations[lang] = i18nData[lang];
@@ -67,11 +66,11 @@ export class DrawStateManager extends Component<Props, DrawState> {
     }
     return (
       <DrawStateContext.Provider value={this.state}>
-        <TranslateProvider translations={translations} lang={detectedLanguage}>
+        <IntlProvider messages={translations} locale={detectedLanguage}>
           <ApplyDefaultConfig defaults={this.state.gameData?.defaults} />
           <UnloadHandler confirmUnload={!!this.state.drawings.length} />
           {this.props.children}
-        </TranslateProvider>
+        </IntlProvider>
       </DrawStateContext.Provider>
     );
   }

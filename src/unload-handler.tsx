@@ -1,13 +1,13 @@
-import { useContext, useEffect } from "preact/hooks";
-import { TranslateContext } from "@denysvuika/preact-translate";
+import { useContext, useEffect } from "react";
+import { useIntl } from "react-intl";
 
 interface Props {
   confirmUnload: boolean;
 }
 
 export function UnloadHandler(props: Props) {
-  const { t } = useContext(TranslateContext);
-  const confirmText = t("confirmClose");
+  const { formatMessage: t } = useIntl();
+  const confirmText = t({ id: "confirmClose" });
 
   function handleUnload(e: BeforeUnloadEvent) {
     if (props.confirmUnload) {

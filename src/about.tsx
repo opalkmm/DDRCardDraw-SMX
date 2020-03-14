@@ -1,6 +1,5 @@
 import { Modal } from "./modal";
-import { FunctionComponent } from "preact";
-import { useContext } from "preact/hooks";
+import { FunctionComponent, useContext } from "react";
 import { TranslateContext } from "@denysvuika/preact-translate";
 import { Icon } from "./icon";
 import styles from "./about.module.css";

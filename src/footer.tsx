@@ -3,7 +3,7 @@ import { detectedLanguage } from "./utils";
 import styles from "./footer.module.css";
 import globalStyles from "./app.module.css";
 import { AuthButton } from "./auth-button";
-import { useContext, useState } from "preact/hooks";
+import { useContext, useState } from "react";
 import { TranslateContext } from "@denysvuika/preact-translate";
 import { About } from "./about";
 

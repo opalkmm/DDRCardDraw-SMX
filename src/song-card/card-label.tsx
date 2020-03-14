@@ -1,12 +1,12 @@
 import classNames from "classnames";
 import styles from "./card-label.module.css";
-import { FunctionalComponent } from "preact";
+import { PropsWithChildren } from "react";
 
 interface Props {
   left?: boolean;
 }
 
-export const CardLabel: FunctionalComponent<Props> = ({ children, left }) => {
+export function CardLabel({ children, left }: PropsWithChildren<Props>) {
   const c = classNames(styles.cardLabel, {
     [styles.left]: left
   });
@@ -15,4 +15,4 @@ export const CardLabel: FunctionalComponent<Props> = ({ children, left }) => {
       <span>{children}</span>
     </div>
   );
-};
+}
