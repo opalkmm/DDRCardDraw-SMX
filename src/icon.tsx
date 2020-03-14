@@ -1,25 +1,11 @@
-import classNames from "classnames";
-import styles from "./icon.module.css";
-import { JSX } from "preact";
+import { Icon as BPIcon } from "@blueprintjs/core";
+import { IconName } from "@blueprintjs/icons";
 
 interface Props {
-  svg: JSX.Element;
+  icon: IconName;
   title: string;
-  onClick?: () => void;
-  className?: string;
 }
 
-export function Icon({ svg, title, onClick, className }: Props) {
-  return (
-    <figure
-      title={title}
-      alt={title}
-      className={classNames(styles.icon, className, {
-        [styles.clickable]: !!onClick
-      })}
-      onClick={onClick}
-    >
-      {svg}
-    </figure>
-  );
+export function Icon({ icon, title }: Props) {
+  return <BPIcon tagName="figure" icon={icon} title={title} />;
 }

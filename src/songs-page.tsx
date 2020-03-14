@@ -4,11 +4,11 @@ import { DrawStateContext } from "./draw-state";
 import { Song, Chart } from "./models/SongData";
 import { ChartList } from "./chart-list";
 import { SongSearch } from "./song-search";
-import { useLocation } from "wouter-preact";
 import { Modal } from "./modal";
 import { MetaString } from "./game-data-utils";
 import { SongList } from "./song-list";
 import styles from "./songs-page.module.css";
+import { useTranslateFunc } from "./hooks/useTranslateFunc";
 
 function FlagsList({ flags }: { flags: string[] | undefined }) {
   return (
@@ -50,8 +50,8 @@ function SongDetail({ song }: { song: Song }) {
 }
 
 export function SongsPage() {
-  const [_, setLocation] = useLocation();
-  const { gameData, dataSetName } = useContext(DrawStateContext);
+  const { t } = useTranslateFunc();
+  const { gameData } = useContext(DrawStateContext);
   const [song, setSelectedSong] = useState<Song | undefined>(undefined);
   const [flag, setSelectedFlag] = useState<string | undefined>(undefined);
   if (!gameData) {
@@ -93,14 +93,14 @@ export function SongsPage() {
           onInput={e => {
             setSelectedFlag(e.currentTarget.value);
           }}
-        >
-          <option>Show by flag</option>
-          {gameData.meta.flags.map(f => (
-            <option value={f}>
-              <MetaString field={f} />
-            </option>
-          ))}
-        </HTMLSelect>
+          options={[
+            { label: "Show by flag", value: "" },
+            ...gameData.meta.flags.map(f => ({
+              value: f,
+              label: t("meta." + f)
+            }))
+          ]}
+        />
       </SongSearch>
     </div>
   );

@@ -1,13 +1,13 @@
-import { useIntl } from "react-intl";
-import { Zap } from "preact-feather";
-import { useContext } from "react";
 import styles from "./shock-badge.module.css";
+import { useTranslateFunc } from "../hooks/useTranslateFunc";
+import { Icon } from "@blueprintjs/core";
+import { IconNames } from "@blueprintjs/icons";
 
 export function ShockBadge() {
-  const { formatMessage: t } = useIntl();
+  const { t } = useTranslateFunc();
   return (
-    <div className={styles.shockBadge} title={t({ id: "shockArrows" })}>
-      <Zap size={12} aria-hidden color="black" fill="yellow" stroke-width="1" />
+    <div className={styles.shockBadge}>
+      <Icon icon={IconNames.OFFLINE} title={t("shockArrows")} iconSize={12} />
     </div>
   );
 }

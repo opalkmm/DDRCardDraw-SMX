@@ -4,11 +4,11 @@ import { draw } from "./card-draw";
 import { Drawing } from "./models/Drawing";
 import FuzzySearch from "fuzzy-search";
 import { GameData, Song } from "./models/SongData";
-import { IntlProvider } from "react-intl";
 import i18nData from "./assets/i18n.json";
 import { detectedLanguage } from "./utils";
 import { ApplyDefaultConfig } from "./apply-default-config";
 import { ConfigState } from "./config-state";
+import { IntlProvider } from "./intl-provider";
 
 interface DrawState {
   gameData: GameData | null;
@@ -56,17 +56,16 @@ export class DrawStateManager extends Component<Props, DrawState> {
   }
 
   render() {
-    const translations: Record<string, string> = {};
-    for (const lang in i18nData as LanguageData) {
-      // @ts-ignore
-      translations[lang] = i18nData[lang];
-      if (this.state.gameData) {
-        translations[lang].meta = this.state.gameData.i18n[lang];
-      }
-    }
+    const allStrings = i18nData as Record<string, Record<string, string>>;
+    const useTranslations = allStrings[detectedLanguage] || allStrings["en"];
+    const additionalStrings = this.state.gameData?.i18n[detectedLanguage];
     return (
       <DrawStateContext.Provider value={this.state}>
-        <IntlProvider messages={translations} locale={detectedLanguage}>
+        <IntlProvider
+          translations={useTranslations}
+          locale={detectedLanguage}
+          mergeTranslations={additionalStrings}
+        >
           <ApplyDefaultConfig defaults={this.state.gameData?.defaults} />
           <UnloadHandler confirmUnload={!!this.state.drawings.length} />
           {this.props.children}

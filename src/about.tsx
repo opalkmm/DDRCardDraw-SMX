@@ -1,17 +1,15 @@
 import { Modal } from "./modal";
-import { FunctionComponent, useContext } from "react";
-import { TranslateContext } from "@denysvuika/preact-translate";
-import { Icon } from "./icon";
 import styles from "./about.module.css";
-
-import { Github, Facebook, Twitter } from "preact-feather";
+import { useTranslateFunc } from "./hooks/useTranslateFunc";
+import { AnchorButton } from "@blueprintjs/core";
+import { IconNames } from "@blueprintjs/icons";
 
 interface Props {
   onClose: () => void;
 }
 
-export const About: FunctionComponent<Props> = ({ onClose }) => {
-  const { t } = useContext(TranslateContext);
+export function About({ onClose }: Props) {
+  const { t } = useTranslateFunc();
 
   return (
     <Modal onClose={onClose}>
@@ -29,29 +27,32 @@ export const About: FunctionComponent<Props> = ({ onClose }) => {
           {t("contact.prompt")}
           <ul className={styles.icons}>
             <li>
-              <a href="https://m.me/noah.manneschmidt" target="_blank">
-                <Icon
-                  svg={<Facebook size={48} />}
-                  title={t("contact.facebook")}
-                />
-              </a>
+              <AnchorButton
+                href="https://m.me/noah.manneschmidt"
+                target="_blank"
+                text={t("contact.facebook")}
+                rightIcon={IconNames.SHARE}
+              />
             </li>
             <li>
-              <a href="https://twitter.com/Cathadan" target="_blank">
-                <Icon
-                  svg={<Twitter size={48} />}
-                  title={t("contact.twitter")}
-                />
-              </a>
+              <AnchorButton
+                href="https://twitter.com/Cathadan"
+                target="_blank"
+                text={t("contact.twitter")}
+                rightIcon={IconNames.SHARE}
+              />
             </li>
             <li>
-              <a href="https://github.com/noahm/DDRCardDraw">
-                <Icon svg={<Github size={48} />} title={t("contact.github")} />
-              </a>
+              <AnchorButton
+                href="https://github.com/noahm/DDRCardDraw"
+                target="_blank"
+                text={t("contact.github")}
+                rightIcon={IconNames.SHARE}
+              />
             </li>
           </ul>
         </p>
       </div>
     </Modal>
   );
-};
+}

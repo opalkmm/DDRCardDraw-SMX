@@ -1,23 +1,20 @@
-import { Navbar, Button } from "@blueprintjs/core";
-import { useRoute, Link } from "wouter-preact";
-import styles from "./header.module.css";
+import { Navbar, Classes } from "@blueprintjs/core";
+import { NavLink, useParams } from "react-router-dom";
 
 export function Header() {
-  const [_, params] = useRoute<{ dataSet: string }>("/:dataSet/:anything*");
-  if (!params) {
+  const params = useParams<{ dataSet: string }>();
+  if (!params.dataSet) {
     return null;
   }
   return (
-    <header className={styles.header}>
-      <Navbar id="HeaderNav">
-        <Link href={`/${params.dataSet}`}>
-          <Button>Browse</Button>
-        </Link>
+    <Navbar id="HeaderNav">
+      <NavLink to={`/${params.dataSet}`} className={Classes.BUTTON}>
+        Browse
+      </NavLink>
 
-        <Link href={`/${params.dataSet}/draw`}>
-          <Button>Draw Songs</Button>
-        </Link>
-      </Navbar>
-    </header>
+      <NavLink to={`/${params.dataSet}/draw`} className={Classes.BUTTON}>
+        Draw Songs
+      </NavLink>
+    </Navbar>
   );
 }

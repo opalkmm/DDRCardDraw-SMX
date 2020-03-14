@@ -1,13 +1,13 @@
-import { useContext, useEffect } from "react";
-import { useIntl } from "react-intl";
+import { useEffect } from "react";
+import { useTranslateFunc } from "./hooks/useTranslateFunc";
 
 interface Props {
   confirmUnload: boolean;
 }
 
 export function UnloadHandler(props: Props) {
-  const { formatMessage: t } = useIntl();
-  const confirmText = t({ id: "confirmClose" });
+  const { t } = useTranslateFunc();
+  const confirmText = t("confirmClose");
 
   function handleUnload(e: BeforeUnloadEvent) {
     if (props.confirmUnload) {

@@ -1,9 +1,10 @@
-import { useContext } from "preact/hooks";
-import { TranslateContext } from "@denysvuika/preact-translate";
+import { useTranslateFunc } from "./hooks/useTranslateFunc";
+import { FormattedMessage } from "react-intl";
 
 export function MetaString({ field }: { field: string }) {
-  const { t } = useContext(TranslateContext);
-  return <>{t("meta." + field)}</>;
+  const { t } = useTranslateFunc();
+  return <FormattedMessage id={"meta." + field} />;
+  // return <>{t()}</>;
 }
 
 interface AbbrProps {
@@ -11,6 +12,6 @@ interface AbbrProps {
 }
 
 export function AbbrDifficulty({ diffClass }: AbbrProps) {
-  const { t } = useContext(TranslateContext);
+  const { t } = useTranslateFunc();
   return <>{t("meta.$abbr." + diffClass)}</>;
 }

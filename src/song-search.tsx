@@ -57,7 +57,7 @@ export function SongSearch(props: PropsWithChildren<Props>) {
               updateSearchTerm(e.currentTarget.value);
             }
           }}
-          value={searchTerm}
+          defaultValue={searchTerm}
         />
         {props.children}
       </div>

@@ -3,15 +3,15 @@ import { detectedLanguage } from "./utils";
 import styles from "./footer.module.css";
 import globalStyles from "./app.module.css";
 import { AuthButton } from "./auth-button";
-import { useContext, useState } from "react";
-import { TranslateContext } from "@denysvuika/preact-translate";
+import { useState } from "react";
 import { About } from "./about";
+import { useTranslateFunc } from "./hooks/useTranslateFunc";
 
 // note that month is zero-indexed for date constructor :)
 const lastUpdate = new Date(2020, 1, 20);
 
 export function Footer() {
-  const { t } = useContext(TranslateContext);
+  const { t } = useTranslateFunc();
   const [showAbout, updateShowAbout] = useState(false);
 
   return (

@@ -1,7 +1,7 @@
 import * as firebase from "firebase/app";
-import { useContext } from "preact/hooks";
+import { useContext } from "react";
 import { AuthContext } from "./auth";
-import { TranslateContext } from "@denysvuika/preact-translate";
+import { useTranslateFunc } from "./hooks/useTranslateFunc";
 
 function login() {
   firebase
@@ -23,7 +23,7 @@ function logout() {
 
 export function AuthButton() {
   const auth = useContext(AuthContext);
-  const { t } = useContext(TranslateContext);
+  const { t } = useTranslateFunc();
 
   if (auth.status !== "resolved") {
     return null;

@@ -1,14 +1,15 @@
 import classNames from "classnames";
 import { detectedLanguage } from "../utils";
 import styles from "./song-card.module.css";
-import { useState } from "preact/hooks";
-import { Lock, Edit, Slash } from "preact-feather";
+import { useState } from "react";
 import { IconMenu } from "./icon-menu";
 import { CardLabel } from "./card-label";
 import { DrawnChart } from "../models/Drawing";
 import { AbbrDifficulty } from "../game-data-utils";
 import { useDifficultyColor } from "../hooks/useDifficultyColor";
 import { ShockBadge } from "./shock-badge";
+import { Icon } from "@blueprintjs/core";
+import { IconNames } from "@blueprintjs/icons";
 
 const isJapanese = detectedLanguage === "ja";
 
@@ -79,19 +80,19 @@ export function SongCard(props: Props) {
       {vetoedBy && (
         <CardLabel left={vetoedBy === 1}>
           P{vetoedBy}
-          <Slash size={16} />
+          <Icon icon={IconNames.BAN_CIRCLE} />
         </CardLabel>
       )}
       {protectedBy && (
         <CardLabel left={protectedBy === 1}>
           P{protectedBy}
-          <Lock size={16} />
+          <Icon icon={IconNames.LOCK} />
         </CardLabel>
       )}
       {replacedBy && (
         <CardLabel left={replacedBy === 1}>
           P{replacedBy}
-          <Edit size={16} />
+          <Icon icon={IconNames.INHERITANCE} />
         </CardLabel>
       )}
       {showingIconMenu && (

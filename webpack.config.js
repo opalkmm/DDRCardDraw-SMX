@@ -50,11 +50,7 @@ module.exports = function(env = {}, argv = {}) {
       modules: false
     },
     resolve: {
-      extensions: [".js", ".jsx", ".ts", ".tsx", ".css", ".json"],
-      alias: {
-        react: "preact/compat",
-        "react-dom": "preact/compat"
-      }
+      extensions: [".js", ".jsx", ".ts", ".tsx", ".css", ".json"]
     },
     module: {
       rules: [
@@ -75,15 +71,17 @@ module.exports = function(env = {}, argv = {}) {
                 require("@babel/plugin-syntax-dynamic-import"),
                 [
                   require("@babel/plugin-transform-react-jsx"),
-                  { pragma: "h", pragmaFrag: "Fragment" }
+                  {
+                    pragma: "React.createElement",
+                    pragmaFrag: "React.Fragment"
+                  }
                 ],
                 require("@babel/plugin-transform-react-jsx-source"),
                 [
                   require("@emotion/babel-plugin-jsx-pragmatic"),
                   {
-                    module: "preact",
-                    import: "h, Fragment",
-                    export: "h"
+                    module: "react",
+                    import: "React"
                   }
                 ]
               ]

@@ -1,6 +1,7 @@
-import { createPortal, FunctionComponent, useLayoutEffect } from "react";
+import { FunctionComponent, useLayoutEffect } from "react";
+import { createPortal } from "react-dom";
 import { Icon } from "./icon";
-import { X } from "preact-feather";
+import { IconNames } from "@blueprintjs/icons";
 import styles from "./modal.module.css";
 
 const modalRoot = document.createElement("div");
@@ -29,12 +30,9 @@ export const Modal: FunctionComponent<Props> = ({ children, onClose }) => {
     <div className={styles.modalBackdrop}>
       <div className={styles.modalContents}>
         {onClose && (
-          <Icon
-            svg={<X />}
-            title="Close"
-            className={styles.close}
-            onClick={onClose}
-          />
+          <div className={styles.close} onClick={onClose}>
+            <Icon icon={IconNames.CROSS} title="Close" />
+          </div>
         )}
         {children}
       </div>

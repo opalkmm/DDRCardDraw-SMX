@@ -1,10 +1,10 @@
 import * as OfflinePluginRuntime from "offline-plugin/runtime";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import styles from "./update-manager.module.css";
-import { useIntl } from "react-intl";
+import { useTranslateFunc } from "./hooks/useTranslateFunc";
 
 export function UpdateManager() {
-  const { formatMessage: t } = useIntl();
+  const { t } = useTranslateFunc();
   const [updateStatus, setStatus] = useState<null | "loading" | "ready">(null);
   useEffect(() => {
     if (process.env.NODE_ENV === "production") {
@@ -22,11 +22,9 @@ export function UpdateManager() {
 
   switch (updateStatus) {
     case "loading":
-      return (
-        <p className={styles.updateBanner}>{t({ id: "updateLoading" })}</p>
-      );
+      return <p className={styles.updateBanner}>{t("updateLoading")}</p>;
     case "ready":
-      return <p className={styles.updateBanner}>{t({ id: "updateReady" })}</p>;
+      return <p className={styles.updateBanner}>{t("updateReady")}</p>;
     default:
       return null;
   }

@@ -1,10 +1,11 @@
 import "normalize.css";
 import "@blueprintjs/core/lib/css/blueprint.css";
+import "@blueprintjs/icons/lib/css/blueprint-icons.css";
+import "regenerator-runtime/runtime";
 
 import "./firebase";
 import { render } from "react-dom";
 import { useEffect } from "react";
-import { Route, Switch, useLocation, useRoute } from "wouter-preact";
 import { Controls } from "./controls";
 import { DrawingList } from "./drawing-list";
 import { Footer } from "./footer";
@@ -16,26 +17,23 @@ import { ConfigStateManager } from "./config-state";
 import { SongsPage } from "./songs-page";
 import { Header } from "./header";
 import { useDarkThemePreference } from "./hooks/useDarkThemePreference";
-
-interface RedirectProps {
-  replace?: boolean;
-  to: string;
-}
-
-function Redirect({ to, replace }: RedirectProps) {
-  const [_, setLocation] = useLocation();
-  useEffect(() => setLocation(to, replace), [to, replace]);
-  return null;
-}
+import { Classes } from "@blueprintjs/core";
+import {
+  BrowserRouter,
+  Redirect,
+  Route,
+  Switch,
+  useRouteMatch
+} from "react-router-dom";
 
 function App() {
-  const [_, params] = useRoute<{ dataSet: string }>("/:dataSet/:anything*");
-  if (!params) {
+  const match = useRouteMatch<{ dataSet: string }>("/:dataSet/");
+  if (!match) {
     return null;
   }
 
   return (
-    <DrawStateManager dataSet={params.dataSet}>
+    <DrawStateManager dataSet={match.params.dataSet}>
       <UpdateManager />
       <Header />
       <Switch>
@@ -58,22 +56,22 @@ function App() {
 function ApplyDarkTheme() {
   const prefersDark = useDarkThemePreference();
   useEffect(() => {
-    document.body.classList.toggle("bp3-dark", prefersDark);
+    document.body.classList.toggle(Classes.DARK, prefersDark);
   });
   return null;
 }
 
 function AppShell() {
   return (
-    <AuthManager>
-      <ConfigStateManager>
-        <ApplyDarkTheme />
-        <App />
-        <Route path="/">
-          <Redirect to="/a20" replace />
-        </Route>
-      </ConfigStateManager>
-    </AuthManager>
+    <BrowserRouter>
+      <AuthManager>
+        <ConfigStateManager>
+          <ApplyDarkTheme />
+          <App />
+          <Redirect from="/" to="/a20" />
+        </ConfigStateManager>
+      </AuthManager>
+    </BrowserRouter>
   );
 }
 
