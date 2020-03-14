@@ -10,7 +10,7 @@
   right: 0;
 }
 
-.cardLabel span {
+.cardLabel > span {
   position: absolute;
   left: 0em;
   top: 0.2em;
@@ -24,7 +24,7 @@
   padding-top: 5px;
   text-align: center;
 }
-.cardLabel.left span {
+.cardLabel.left > span {
   left: auto;
   right: 0;
   transform: rotate(-45deg);

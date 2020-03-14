@@ -3,12 +3,12 @@ import { useContext, useState } from "react";
 import { DrawStateContext } from "./draw-state";
 import { Song, Chart } from "./models/SongData";
 import { ChartList } from "./chart-list";
-import { SongSearch } from "./song-search";
 import { Modal } from "./modal";
 import { MetaString } from "./game-data-utils";
 import { SongList } from "./song-list";
 import styles from "./songs-page.module.css";
 import { useTranslateFunc } from "./hooks/useTranslateFunc";
+import { useRouteMatch } from "react-router-dom";
 
 function FlagsList({ flags }: { flags: string[] | undefined }) {
   return (
@@ -22,8 +22,19 @@ function FlagsList({ flags }: { flags: string[] | undefined }) {
   );
 }
 
-function SongDetail({ song }: { song: Song }) {
+export function SongDetail() {
+  const match = useRouteMatch<{ songID: string }>("/:dataSet/song/:songID");
+  const gameData = useContext(DrawStateContext).gameData;
   const [detailChart, setDetailChart] = useState<Chart | undefined>(undefined);
+
+  if (!gameData) {
+    return <p>Game data not loaded</p>;
+  }
+  const song = match && gameData.songs[+match?.params.songID];
+  if (!song) {
+    return <p>404 Song Not Found</p>;
+  }
+
   return (
     <div>
       <img
@@ -52,18 +63,9 @@ function SongDetail({ song }: { song: Song }) {
 export function SongsPage() {
   const { t } = useTranslateFunc();
   const { gameData } = useContext(DrawStateContext);
-  const [song, setSelectedSong] = useState<Song | undefined>(undefined);
   const [flag, setSelectedFlag] = useState<string | undefined>(undefined);
   if (!gameData) {
     return <div>No game data loaded yet</div>;
-  }
-
-  if (song) {
-    return (
-      <Modal onClose={() => setSelectedSong(undefined)}>
-        <SongDetail song={song} />
-      </Modal>
-    );
   }
 
   if (flag) {
@@ -73,7 +75,6 @@ export function SongsPage() {
           <MetaString field={flag} />
         </h1>
         <SongList
-          onSelect={setSelectedSong}
           songs={gameData.songs.filter(song => {
             return (
               song.flags?.includes(flag) ||
@@ -87,21 +88,19 @@ export function SongsPage() {
 
   return (
     <div className={styles.container}>
-      <SongSearch onSongSelect={setSelectedSong} autofocus>
-        <HTMLSelect
-          value={flag}
-          onInput={e => {
-            setSelectedFlag(e.currentTarget.value);
-          }}
-          options={[
-            { label: "Show by flag", value: "" },
-            ...gameData.meta.flags.map(f => ({
-              value: f,
-              label: t("meta." + f)
-            }))
-          ]}
-        />
-      </SongSearch>
+      <HTMLSelect
+        value=""
+        onInput={e => {
+          setSelectedFlag(e.currentTarget.value);
+        }}
+        options={[
+          { label: "Show by flag", value: "" },
+          ...gameData.meta.flags.map(f => ({
+            value: f,
+            label: t("meta." + f)
+          }))
+        ]}
+      />
     </div>
   );
 }

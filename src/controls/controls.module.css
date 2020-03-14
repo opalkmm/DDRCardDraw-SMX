@@ -1,7 +1,7 @@
 .form {
   flex: 0 0 auto;
   border-bottom: 1px solid darkgray;
-  padding-bottom: 10px;
+  padding: 10px;
 }
 
 label {
@@ -29,17 +29,6 @@ input[type="number"] {
 }
 
 .collapsed .column:not(:last-child) {
-  display: none;
-}
-
-.group {
-  display: flex;
-  flex-direction: column;
-  align-items: left;
-  padding: 10px;
-}
-
-.collapsed .group {
   display: none;
 }
 

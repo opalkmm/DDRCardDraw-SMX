@@ -14,7 +14,7 @@ import { UpdateManager } from "./update-manager";
 import { DrawStateManager } from "./draw-state";
 import styles from "./app.module.css";
 import { ConfigStateManager } from "./config-state";
-import { SongsPage } from "./songs-page";
+import { SongsPage, SongDetail } from "./songs-page";
 import { Header } from "./header";
 import { useDarkThemePreference } from "./hooks/useDarkThemePreference";
 import { Classes } from "@blueprintjs/core";
@@ -36,18 +36,20 @@ function App() {
     <DrawStateManager dataSet={match.params.dataSet}>
       <UpdateManager />
       <Header />
-      <Switch>
-        <Route path="/:dataSet">
-          <SongsPage />
-        </Route>
-        <Route path="/:dataSet/draw">
-          <Controls />
-          <DrawingList />
-        </Route>
-        <Route path="/:anything*">
-          <p>404 Not Found</p>
-        </Route>
-      </Switch>
+      <div className={styles.scrollable}>
+        <Switch>
+          <Route exact path="/:dataSet" component={SongsPage} />
+          <Route path="/:dataSet/song/:songIndex" component={SongDetail} />
+          <Route exact path="/:dataSet/draw">
+            <Controls />
+            <DrawingList />
+          </Route>
+          <Redirect exact from="/" to="/a20" />
+          <Route path="/:anything*">
+            <p>404 Not Found</p>
+          </Route>
+        </Switch>
+      </div>
       <Footer />
     </DrawStateManager>
   );
@@ -68,7 +70,6 @@ function AppShell() {
         <ConfigStateManager>
           <ApplyDarkTheme />
           <App />
-          <Redirect from="/" to="/a20" />
         </ConfigStateManager>
       </AuthManager>
     </BrowserRouter>

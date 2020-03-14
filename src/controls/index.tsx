@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import cn from "classnames";
 import { useContext, useRef, useState } from "react";
 import globalStyles from "../app.module.css";
 import { WeightsControls } from "./controls-weights";
@@ -10,10 +10,12 @@ import {
   FormGroup,
   NumericInput,
   Checkbox,
-  Button
+  Button,
+  Intent
 } from "@blueprintjs/core";
 import { useTranslateFunc } from "../hooks/useTranslateFunc";
 import { useHistory } from "react-router-dom";
+import { IconNames } from "@blueprintjs/icons";
 
 function preventDefault(e: { preventDefault(): void }) {
   e.preventDefault();
@@ -23,16 +25,13 @@ export function Controls() {
   const form = useRef<HTMLFormElement | null>(null);
   const [collapsed, setCollapsed] = useState(false);
   const { t } = useTranslateFunc();
-  const history = useHistory();
-  const { drawSongs, dataSetName, lastDrawFailed, gameData } = useContext(
-    DrawStateContext
-  );
+  const { drawSongs, lastDrawFailed, gameData } = useContext(DrawStateContext);
   const configState = useContext(ConfigStateContext);
   const {
     useWeights,
     lowerBound,
     upperBound,
-    update: updateState,
+    update: updateConfig,
     difficulties: selectedDifficulties,
     flags: selectedFlags,
     style: selectedStyle,
@@ -43,12 +42,11 @@ export function Controls() {
   }
   const { difficulties, flags, lvlMax, styles: gameStyles } = gameData.meta;
 
-  const handleLowerBoundChange = (e: { currentTarget: HTMLInputElement }) => {
-    const newValue = parseInt(e.currentTarget.value, 10);
+  const handleLowerBoundChange = (newValue: number) => {
     if (newValue > upperBound) {
       return;
     }
-    updateState(state => {
+    updateConfig(state => {
       return {
         ...state,
         lowerBound: newValue
@@ -56,21 +54,16 @@ export function Controls() {
     });
   };
 
-  const handleUpperBoundChange = (e: { currentTarget: HTMLInputElement }) => {
-    const newValue = parseInt(e.currentTarget.value, 10);
+  const handleUpperBoundChange = (newValue: number) => {
     if (newValue < lowerBound) {
       return;
     }
-    updateState(state => {
+    updateConfig(state => {
       return {
         ...state,
         upperBound: newValue
       };
     });
-  };
-
-  const handleSongListChange = (v: string) => {
-    history.push(`/${v}`);
   };
 
   const handleRandomize = (e: { preventDefault(): void }) => {
@@ -81,32 +74,19 @@ export function Controls() {
   return (
     <form
       ref={form}
-      className={styles.form + (collapsed ? " " + styles.collapsed : "")}
+      className={cn(styles.form, { [styles.collapsed]: collapsed })}
       onSubmit={preventDefault}
     >
       <section className={styles.columns}>
         <div className={styles.column}>
-          <FormGroup labelFor="dataSource" label={t("dataSource")}>
-            <HTMLSelect
-              id="dataSource"
-              onChange={e => handleSongListChange(e.currentTarget.value)}
-              value={dataSetName}
-            >
-              <option value="a20">A20</option>
-              <option value="ace">Ace</option>
-              <option value="extreme">Extreme</option>
-              <option value="drs">DANCERUSH</option>
-            </HTMLSelect>
-          </FormGroup>
           <FormGroup labelFor="chartCount" label={t("chartCount")}>
             <NumericInput
-              // type="number"
               id="chartCount"
               value={chartCount}
               min={1}
-              onInput={e => {
-                updateState(s => {
-                  return { ...s, chartCount: +e.currentTarget.value };
+              onValueChange={chartCount => {
+                updateConfig(s => {
+                  return { ...s, chartCount };
                 });
               }}
             />
@@ -115,16 +95,16 @@ export function Controls() {
             <FormGroup labelFor="upperBound" label={t("upperBound")}>
               <NumericInput
                 id="upperBound"
-                onChange={handleUpperBoundChange}
+                onValueChange={handleUpperBoundChange}
                 value={upperBound}
                 min={lowerBound}
-                max={lvlMax}
+                max={Math.max(lowerBound, lvlMax)}
               />
             </FormGroup>
             <FormGroup labelFor="lowerBound" label={t("lowerBound")}>
               <NumericInput
                 id="lowerBound"
-                onChange={handleLowerBoundChange}
+                onValueChange={handleLowerBoundChange}
                 value={lowerBound}
                 min={1}
                 max={upperBound}
@@ -135,12 +115,13 @@ export function Controls() {
             <Checkbox
               id="weighted"
               checked={useWeights}
-              onChange={e =>
-                updateState(state => ({
+              onChange={e => {
+                const useWeights = !!e.currentTarget.checked;
+                updateConfig(state => ({
                   ...state,
-                  useWeights: !!e.currentTarget.checked
-                }))
-              }
+                  useWeights
+                }));
+              }}
               label={t("useWeightedDistributions")}
             />
           </FormGroup>
@@ -150,9 +131,10 @@ export function Controls() {
             <HTMLSelect
               id="style"
               value={selectedStyle}
-              onInput={e => {
-                updateState(s => {
-                  return { ...s, style: e.currentTarget.value };
+              onChange={e => {
+                const style = e.currentTarget.value;
+                updateConfig(s => {
+                  return { ...s, style };
                 });
               }}
             >
@@ -166,17 +148,18 @@ export function Controls() {
           <FormGroup label={t("difficulties")}>
             {difficulties.map(dif => (
               <Checkbox
-                key={`${dataSetName}:${dif.key}`}
+                key={`${dif.key}`}
                 name="difficulties"
                 value={dif.key}
                 checked={selectedDifficulties.has(dif.key)}
-                onInput={e => {
-                  updateState(s => {
+                onChange={e => {
+                  const { checked, value } = e.currentTarget;
+                  updateConfig(s => {
                     const difficulties = new Set(s.difficulties);
-                    if (e.currentTarget.checked) {
-                      difficulties.add(e.currentTarget.value);
+                    if (checked) {
+                      difficulties.add(value);
                     } else {
-                      difficulties.delete(e.currentTarget.value);
+                      difficulties.delete(value);
                     }
                     return { ...s, difficulties };
                   });
@@ -187,16 +170,16 @@ export function Controls() {
           </FormGroup>
         </div>
         <div className={styles.column}>
-          {!!flags.length && (
+          {!!flags.length && !collapsed && (
             <FormGroup label={t("include")}>
               {flags.map(key => (
-                <label key={`${dataSetName}:${key}`}>
+                <label key={`${key}`}>
                   <Checkbox
                     name="inclusions"
                     value={key}
                     checked={selectedFlags.has(key)}
                     onInput={e =>
-                      updateState(s => {
+                      updateConfig(s => {
                         const newFlags = new Set(s.flags);
                         if (newFlags.has(key)) {
                           newFlags.delete(key);
@@ -212,10 +195,15 @@ export function Controls() {
               ))}
             </FormGroup>
           )}
-          <div className={classNames(globalStyles.padded, styles.buttons)}>
-            <Button onClick={handleRandomize}>{t("draw")}</Button>{" "}
-            <Button onClick={() => setCollapsed(!collapsed)}>
+          <div className={cn(globalStyles.padded, styles.buttons)}>
+            <Button
+              icon={collapsed ? IconNames.CARET_DOWN : IconNames.CARET_UP}
+              onClick={() => setCollapsed(!collapsed)}
+            >
               {t(collapsed ? "controls.show" : "controls.hide")}
+            </Button>{" "}
+            <Button onClick={handleRandomize} intent={Intent.PRIMARY}>
+              {t("draw")}
             </Button>
           </div>
           {!!lastDrawFailed && <div>{t("controls.invalid")}</div>}

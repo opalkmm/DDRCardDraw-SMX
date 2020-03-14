@@ -1,11 +1,17 @@
 import classNames from "classnames";
 import { detectedLanguage } from "./utils";
 import styles from "./footer.module.css";
-import globalStyles from "./app.module.css";
 import { AuthButton } from "./auth-button";
 import { useState } from "react";
 import { About } from "./about";
 import { useTranslateFunc } from "./hooks/useTranslateFunc";
+import {
+  Navbar,
+  NavbarGroup,
+  Button,
+  NavbarHeading,
+  Alignment
+} from "@blueprintjs/core";
 
 // note that month is zero-indexed for date constructor :)
 const lastUpdate = new Date(2020, 1, 20);
@@ -15,19 +21,20 @@ export function Footer() {
   const [showAbout, updateShowAbout] = useState(false);
 
   return (
-    <footer className={classNames(styles.footer, globalStyles.padded)}>
+    <Navbar className={styles.footer}>
       {showAbout && <About onClose={() => updateShowAbout(false)} />}
-      <div>
-        {t("lastUpdate", {
-          date: new Intl.DateTimeFormat(detectedLanguage).format(lastUpdate)
-        })}
-      </div>
-      <div className={styles.icons}>
+      <NavbarGroup>
+        <NavbarHeading>
+          {t("lastUpdate", {
+            date: new Intl.DateTimeFormat(detectedLanguage).format(lastUpdate)
+          })}
+        </NavbarHeading>
+      </NavbarGroup>
+
+      <NavbarGroup align={Alignment.RIGHT}>
         {/* <AuthButton />{" "} */}
-        <a href="#" onClick={e => (e.preventDefault(), updateShowAbout(true))}>
-          {t("credits")}
-        </a>
-      </div>
-    </footer>
+        <Button onClick={() => updateShowAbout(true)}>{t("credits")}</Button>
+      </NavbarGroup>
+    </Navbar>
   );
 }

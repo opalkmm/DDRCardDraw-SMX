@@ -1,7 +1,7 @@
 import { Modal } from "./modal";
 import styles from "./about.module.css";
 import { useTranslateFunc } from "./hooks/useTranslateFunc";
-import { AnchorButton } from "@blueprintjs/core";
+import { AnchorButton, ButtonGroup } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
 
 interface Props {
@@ -23,35 +23,27 @@ export function About({ onClose }: Props) {
               ))}
           </ul>
         </p>
-        <p>
-          {t("contact.prompt")}
-          <ul className={styles.icons}>
-            <li>
-              <AnchorButton
-                href="https://m.me/noah.manneschmidt"
-                target="_blank"
-                text={t("contact.facebook")}
-                rightIcon={IconNames.SHARE}
-              />
-            </li>
-            <li>
-              <AnchorButton
-                href="https://twitter.com/Cathadan"
-                target="_blank"
-                text={t("contact.twitter")}
-                rightIcon={IconNames.SHARE}
-              />
-            </li>
-            <li>
-              <AnchorButton
-                href="https://github.com/noahm/DDRCardDraw"
-                target="_blank"
-                text={t("contact.github")}
-                rightIcon={IconNames.SHARE}
-              />
-            </li>
-          </ul>
-        </p>
+        <p>{t("contact.prompt")}</p>
+        <ButtonGroup vertical>
+          <AnchorButton
+            href="https://m.me/noah.manneschmidt"
+            target="_blank"
+            text={t("contact.facebook")}
+            rightIcon={IconNames.SHARE}
+          />
+          <AnchorButton
+            href="https://twitter.com/Cathadan"
+            target="_blank"
+            text={t("contact.twitter")}
+            rightIcon={IconNames.SHARE}
+          />
+          <AnchorButton
+            href="https://github.com/noahm/DDRCardDraw"
+            target="_blank"
+            text={t("contact.github")}
+            rightIcon={IconNames.SHARE}
+          />
+        </ButtonGroup>
       </div>
     </Modal>
   );

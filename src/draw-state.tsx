@@ -29,7 +29,7 @@ export const DrawStateContext = createContext<DrawState>({
 });
 
 interface Props {
-  dataSet: string;
+  dataSet?: string;
 }
 
 export class DrawStateManager extends Component<Props, DrawState> {
@@ -39,7 +39,7 @@ export class DrawStateManager extends Component<Props, DrawState> {
       gameData: null,
       fuzzySearch: null,
       drawings: [],
-      dataSetName: props.dataSet,
+      dataSetName: props.dataSet || "",
       lastDrawFailed: false,
       drawSongs: this.doDrawing
     };
@@ -50,7 +50,7 @@ export class DrawStateManager extends Component<Props, DrawState> {
   }
 
   componentDidUpdate(prevProps: Props) {
-    if (prevProps.dataSet !== this.props.dataSet) {
+    if (prevProps.dataSet !== this.props.dataSet && this.props.dataSet) {
       this.loadSongSet(this.props.dataSet);
     }
   }

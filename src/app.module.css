@@ -21,21 +21,15 @@ body:global(.bp3-dark) {
   width: 100%;
 }
 
-h1 {
-  padding-left: 10px;
+.scrollable {
+  flex: 1 0 0;
 }
 
-.padded {
-  padding: 10px;
-}
-
-.padded button {
-  height: 25px;
-  line-height: 0px;
-}
-
-a:any-link {
-  color: blue;
+@media (min-width: 1025px) {
+  .scrollable {
+    overflow: auto;
+    min-height: 12em;
+  }
 }
 
 input[type="color"],

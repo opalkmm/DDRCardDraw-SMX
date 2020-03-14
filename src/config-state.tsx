@@ -24,8 +24,8 @@ export class ConfigStateManager extends Component<Props, ConfigState> {
     super(props);
     this.state = {
       chartCount: 5,
-      upperBound: 0,
-      lowerBound: 0,
+      upperBound: 1,
+      lowerBound: 1,
       useWeights: false,
       weights: [],
       forceDistribution: true,

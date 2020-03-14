@@ -1,15 +1,10 @@
-import { InputGroup } from "@blueprintjs/core";
-import {
-  useContext,
-  useState,
-  useRef,
-  useLayoutEffect,
-  PropsWithChildren
-} from "react";
+import { InputGroup, Popover, PopoverInteractionKind } from "@blueprintjs/core";
+import { useContext, useState, useRef } from "react";
 import { DrawStateContext } from "./draw-state";
 import styles from "./song-search.module.css";
 import { Song, Chart } from "./models/SongData";
 import { SongList } from "./song-list";
+import { IconNames } from "@blueprintjs/icons";
 
 interface Props {
   autofocus?: boolean;
@@ -19,7 +14,8 @@ interface Props {
   showCharts?: boolean;
 }
 
-export function SongSearch(props: PropsWithChildren<Props>) {
+export function SongSearch(props: Props) {
+  const inputRef = useRef<HTMLInputElement | null>(null);
   const {
     autofocus,
     onChartSelect,
@@ -30,12 +26,6 @@ export function SongSearch(props: PropsWithChildren<Props>) {
   const [searchTerm, updateSearchTerm] = useState("");
 
   const { fuzzySearch } = useContext(DrawStateContext);
-  // const input = useRef<HTMLInputElement>();
-  // useLayoutEffect(() => {
-  //   if (autofocus && input.current) {
-  //     input.current!.focus();
-  //   }
-  // }, []);
 
   let results: Song[] = [];
   if (fuzzySearch && searchTerm) {
@@ -43,37 +33,37 @@ export function SongSearch(props: PropsWithChildren<Props>) {
   }
 
   return (
-    <>
-      <div className={styles.input}>
-        <InputGroup
-          placeholder="Search for a song"
-          type="search"
-          autoFocus={autofocus}
-          onKeyUp={e => {
-            if (e.keyCode === 27) {
-              e.preventDefault();
-              updateSearchTerm("");
-            } else if (e.currentTarget.value !== searchTerm) {
-              updateSearchTerm(e.currentTarget.value);
-            }
-          }}
-          defaultValue={searchTerm}
+    <Popover
+      isOpen={!!results.length}
+      content={
+        <SongList
+          songs={results}
+          showCharts={showCharts}
+          filterCharts={filterCharts}
+          onSelectChart={onChartSelect}
+          onSelect={onSongSelect}
         />
-        {props.children}
-      </div>
-      <div className={styles.suggestionSet}>
-        {fuzzySearch ? (
-          <SongList
-            songs={results}
-            showCharts={showCharts}
-            filterCharts={filterCharts}
-            onSelectChart={onChartSelect}
-            onSelect={onSongSelect}
-          />
-        ) : (
-          "Search is not loaded right now."
-        )}
-      </div>
-    </>
+      }
+    >
+      <InputGroup
+        inputRef={e => (inputRef.current = e)}
+        leftIcon={IconNames.SEARCH}
+        placeholder="Find a song"
+        type="search"
+        autoFocus={autofocus}
+        onKeyUp={e => {
+          if (e.keyCode === 27) {
+            e.preventDefault();
+            updateSearchTerm("");
+            if (inputRef.current) {
+              inputRef.current.value = "";
+            }
+          } else if (e.currentTarget.value !== searchTerm) {
+            updateSearchTerm(e.currentTarget.value);
+          }
+        }}
+        defaultValue={searchTerm}
+      />
+    </Popover>
   );
 }
