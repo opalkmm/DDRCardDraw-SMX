@@ -28,12 +28,9 @@ import {
 
 function App() {
   const match = useRouteMatch<{ dataSet: string }>("/:dataSet/");
-  if (!match) {
-    return null;
-  }
 
   return (
-    <DrawStateManager dataSet={match.params.dataSet}>
+    <DrawStateManager dataSet={match?.params.dataSet}>
       <UpdateManager />
       <Header />
       <div className={styles.scrollable}>
@@ -44,7 +41,9 @@ function App() {
             <Controls />
             <DrawingList />
           </Route>
-          <Redirect exact from="/" to="/a20" />
+          <Route exact path="/">
+            <Redirect to="/a20" />
+          </Route>
           <Route path="/:anything*">
             <p>404 Not Found</p>
           </Route>

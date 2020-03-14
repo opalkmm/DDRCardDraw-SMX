@@ -46,6 +46,7 @@ export function SongSearch(props: Props) {
       }
     >
       <InputGroup
+        fill
         inputRef={e => (inputRef.current = e)}
         leftIcon={IconNames.SEARCH}
         placeholder="Find a song"
