@@ -1,4 +1,4 @@
-import { HTMLSelect } from "@blueprintjs/core";
+import { HTMLSelect, UL } from "@blueprintjs/core";
 import { useContext, useState } from "react";
 import { DrawStateContext } from "./draw-state";
 import { Song, Chart } from "./models/SongData";
@@ -12,13 +12,15 @@ import { useRouteMatch } from "react-router-dom";
 
 function FlagsList({ flags }: { flags: string[] | undefined }) {
   return (
-    <ul>
-      {flags?.map(f => (
-        <li key={f}>
-          <MetaString field={f} />
-        </li>
-      )) || <li>None</li>}
-    </ul>
+    <p>
+      <UL>
+        {flags?.map(f => (
+          <li key={f}>
+            <MetaString field={f} />
+          </li>
+        )) || <li>None</li>}
+      </UL>
+    </p>
   );
 }
 
@@ -36,10 +38,10 @@ export function SongDetail() {
   }
 
   return (
-    <div>
+    <div style={{ padding: "1em" }}>
       <img
         src={`/jackets/${song.jacket}`}
-        style={{ float: "left", width: "25em", marginRight: "1em" }}
+        style={{ float: "left", width: "25em", margin: "0 1em 1em 0" }}
       />
       <h1>{song.name}</h1>
       {song.name_translation && <h4>{song.name_translation}</h4>}
@@ -48,7 +50,7 @@ export function SongDetail() {
       <p>BPM: {song.bpm}</p>
       <h3>Song Flags</h3>
       <FlagsList flags={song.flags} />
-      <h3>Charts</h3>
+      <h3 style={{ clear: "left" }}>Charts</h3>
       <ChartList song={song} onClickChart={setDetailChart} />
       {detailChart && (
         <>

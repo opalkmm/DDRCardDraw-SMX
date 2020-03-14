@@ -23,9 +23,7 @@ export function Header() {
   return (
     <Navbar id="HeaderNav" style={{ position: "sticky", top: 0 }}>
       <NavbarGroup align={Alignment.LEFT}>
-        <NavbarHeading>
-          <VersionSelect />
-        </NavbarHeading>
+        <VersionSelect />
         <NavbarDivider />
         <ButtonGroup minimal>
           <NavLink
