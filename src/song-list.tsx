@@ -30,7 +30,7 @@ export function SongList(props: Props) {
           })}
           onClick={onSelect && (() => onSelect!(song, i))}
         >
-          <img src={`/jackets/${song.jacket}`} className={styles.img} />
+          <img src={`jackets/${song.jacket}`} className={styles.img} />
           <div className={styles.title}>
             {song.name_translation || song.name}
             <br />

@@ -83,13 +83,15 @@ export class DrawStateManager extends Component<Props, DrawState> {
       drawings: [],
       fuzzySearch: null,
       dataSetName,
-      gameDataFailed: false
+      gameDataFailed: false,
+      lastDrawFailed: false
     });
 
-    return import(
-      /* webpackChunkName: "songData" */ `./songs/${dataSetName}.json`
-    )
+    import(/* webpackChunkName: "songData" */ `./songs/${dataSetName}.json`)
       .then(({ default: data }) => {
+        if (this.state.dataSetName !== dataSetName) {
+          return; // we're already using a different data set now, discard this one
+        }
         this.setState({
           gameData: data,
           fuzzySearch: new FuzzySearch(
@@ -106,9 +108,11 @@ export class DrawStateManager extends Component<Props, DrawState> {
             }
           )
         });
-        return data;
       })
-      .catch(e => {
+      .catch(() => {
+        if (this.state.dataSetName !== dataSetName) {
+          return; // may have had an error, but we're already using a different data set now
+        }
         this.setState({
           gameDataFailed: true
         });

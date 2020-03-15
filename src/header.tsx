@@ -22,17 +22,17 @@ export function Header() {
   const menu = (
     <Menu>
       <Menu.Item
-        href={`/${match.params.dataSet}`}
+        href={`#/${match.params.dataSet}`}
         icon={IconNames.HOME}
         text="Home"
       />
       <Menu.Item
-        href={`/${match.params.dataSet}/draw`}
+        href={`#/${match.params.dataSet}/draw`}
         icon={IconNames.LAYERS}
         text="Card Draw"
       />
       <Menu.Item
-        href="/credits"
+        href="#/credits"
         icon={IconNames.HELP}
         text={<FormattedMessage id="credits" />}
       />

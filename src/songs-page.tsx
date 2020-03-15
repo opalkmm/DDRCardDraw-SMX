@@ -39,7 +39,7 @@ export function SongDetail() {
   return (
     <div style={{ padding: "1em" }}>
       <img
-        src={`/jackets/${song.jacket}`}
+        src={`jackets/${song.jacket}`}
         style={{ float: "left", width: "25em", margin: "0 1em 1em 0" }}
       />
       <h1>{song.name}</h1>

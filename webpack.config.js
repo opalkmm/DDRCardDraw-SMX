@@ -16,25 +16,20 @@ module.exports = function(env = {}, argv = {}) {
   const version = env.version || "custom";
   const target = env.target || "unknown";
 
-  const htmlFile = target === "surge" ? "200.html" : "index.html";
-
   return {
     mode: isProd ? "production" : "development",
     devtool: isProd ? false : "cheap-module-eval-source-map",
     devServer: !serve
       ? undefined
       : {
-          contentBase: "./dist",
-          historyApiFallback: true,
-          index: htmlFile
+          contentBase: "./dist"
           // host: "0.0.0.0" // uncomment to access via IP over local network
         },
     entry: "./src/app.tsx",
     output: {
       filename: "[name].[hash:5].js",
       chunkFilename: "[name].[chunkhash:5].js",
-      path: resolve(__dirname, "./dist"),
-      publicPath: "/"
+      path: resolve(__dirname, "./dist")
     },
     optimization: {
       minimize: isProd
@@ -98,7 +93,6 @@ module.exports = function(env = {}, argv = {}) {
                 modules: {
                   localIdentName: "[local]__[hash:base64:5]"
                 }
-                // importLoaders: 1
               }
             },
             {
@@ -146,7 +140,7 @@ module.exports = function(env = {}, argv = {}) {
       }),
       new HtmlWebpackPlugin({
         title: "DDR Card Draw",
-        filename: htmlFile,
+        filename: "index.html",
         meta: {
           viewport: "width=device-width, initial-scale=1"
         }
