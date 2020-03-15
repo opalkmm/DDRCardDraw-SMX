@@ -1,4 +1,4 @@
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import { DrawingList } from "./drawing-list";
 import { NotFoundPage } from "./non-ideal-pages";
 import { AboutPage } from "./about";
@@ -16,6 +16,7 @@ export function AppPages() {
           <Route exact path="/:dataSet" component={GameIndexPage} />
         </Switch>
       </Route>
+      <Redirect to="/a20" />
     </Switch>
   );
 }
