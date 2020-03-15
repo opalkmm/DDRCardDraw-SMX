@@ -13,6 +13,7 @@ import {
   Alignment,
   Dialog
 } from "@blueprintjs/core";
+import { ThemeToggle } from "./theme-toggle";
 
 // note that month is zero-indexed for date constructor :)
 const lastUpdate = new Date(2020, 1, 20);
@@ -40,6 +41,7 @@ export function Footer() {
 
       <NavbarGroup align={Alignment.RIGHT}>
         {/* <AuthButton />{" "} */}
+        <ThemeToggle />{" "}
         <Button onClick={() => updateShowAbout(true)}>{t("credits")}</Button>
       </NavbarGroup>
     </Navbar>

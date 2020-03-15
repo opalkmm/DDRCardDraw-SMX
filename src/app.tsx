@@ -54,20 +54,11 @@ function App() {
   );
 }
 
-function ApplyDarkTheme() {
-  const prefersDark = useDarkThemePreference();
-  useEffect(() => {
-    document.body.classList.toggle(Classes.DARK, prefersDark);
-  });
-  return null;
-}
-
 function AppShell() {
   return (
     <BrowserRouter>
       <AuthManager>
         <ConfigStateManager>
-          <ApplyDarkTheme />
           <App />
         </ConfigStateManager>
       </AuthManager>
