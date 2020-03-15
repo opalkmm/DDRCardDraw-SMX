@@ -7,15 +7,13 @@ export function About() {
 
   return (
     <div style={{ padding: "0 1.5em" }}>
-      <p>
-        <UL>
-          {t("about")
-            .split(" * ")
-            .map((line, i) => (
-              <li key={i}>{line}</li>
-            ))}
-        </UL>
-      </p>
+      <UL>
+        {t("about.body")
+          .split(" * ")
+          .map((line, i) => (
+            <li key={i}>{line}</li>
+          ))}
+      </UL>
       <p>{t("contact.prompt")}</p>
       <ButtonGroup vertical>
         <AnchorButton

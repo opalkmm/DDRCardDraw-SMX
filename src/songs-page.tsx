@@ -91,7 +91,7 @@ export function SongsPage() {
       </Dialog>
       <HTMLSelect
         value=""
-        onInput={e => {
+        onChange={e => {
           setSelectedFlag(e.currentTarget.value);
         }}
         options={[

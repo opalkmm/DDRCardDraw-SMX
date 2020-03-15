@@ -52,10 +52,9 @@ export function WeightsControls({ high, low }: Props) {
     <section className={styles.weights}>
       <p>{t({ id: "weights.explanation" })}</p>
       {levels.map((level, i) => (
-        <div className={styles.level}>
+        <div className={styles.level} key={level}>
           <NumericInput
             width={2}
-            key={level}
             value={weights[level] || ""}
             min={0}
             onValueChange={v => setWeight(level, v)}

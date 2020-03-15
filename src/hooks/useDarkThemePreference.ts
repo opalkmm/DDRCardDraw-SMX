@@ -13,9 +13,9 @@ export function useDarkThemePreference() {
     function handleThemeChange(a: MediaQueryListEvent) {
       setMatches(a.matches);
     }
-    prefersDarkQuery.addEventListener("change", handleThemeChange);
+    prefersDarkQuery.addListener(handleThemeChange);
     return () => {
-      prefersDarkQuery.removeEventListener("change", handleThemeChange);
+      prefersDarkQuery.removeListener(handleThemeChange);
     };
   }, []);
 
