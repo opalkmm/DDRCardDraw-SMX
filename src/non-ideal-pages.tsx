@@ -1,4 +1,4 @@
-import { NonIdealState, Card } from "@blueprintjs/core";
+import { NonIdealState, Card, Spinner } from "@blueprintjs/core";
 import { FormattedMessage } from "react-intl";
 import styles from "./not-found-page.module.css";
 
@@ -25,6 +25,20 @@ export function NotFoundPage(props: Props) {
         </Card>
       }
       action={props.action}
+    />
+  );
+}
+
+export function LoadingGameData() {
+  return (
+    <NonIdealState
+      icon={<Spinner />}
+      title={
+        <FormattedMessage
+          id="songs.loading"
+          defaultMessage="Loading game data"
+        />
+      }
     />
   );
 }

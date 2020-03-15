@@ -1,6 +1,6 @@
 import { Switch, Route } from "react-router-dom";
 import { DrawingList } from "./drawing-list";
-import { NotFoundPage } from "./not-found-page";
+import { NotFoundPage } from "./non-ideal-pages";
 import { AboutPage } from "./about";
 import { GameIndexPage, SongDetail } from "./game-index-page";
 

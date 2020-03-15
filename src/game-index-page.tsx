@@ -3,7 +3,10 @@ import {
   UL,
   Dialog,
   NonIdealState,
-  Spinner
+  ButtonGroup,
+  AnchorButton,
+  Intent,
+  Divider
 } from "@blueprintjs/core";
 import { useContext, useState } from "react";
 import { DrawStateContext } from "./draw-state";
@@ -11,10 +14,11 @@ import { Chart } from "./models/SongData";
 import { ChartList } from "./chart-list";
 import { MetaString } from "./game-data-utils";
 import { SongList } from "./song-list";
-import styles from "./songs-page.module.css";
+import styles from "./game-index-page.module.css";
 import { useTranslateFunc } from "./hooks/useTranslateFunc";
 import { useRouteMatch } from "react-router-dom";
-import { NotFoundPage } from "./not-found-page";
+import { NotFoundPage } from "./non-ideal-pages";
+import { LoadingGameData } from "./non-ideal-pages";
 import { IconNames } from "@blueprintjs/icons";
 import { FormattedMessage } from "react-intl";
 
@@ -38,11 +42,11 @@ export function SongDetail() {
   const [detailChart, setDetailChart] = useState<Chart | undefined>(undefined);
 
   if (!gameData) {
-    return <p>Game data not loaded</p>;
+    return <LoadingGameData />;
   }
   const song = match && gameData.songs[+match?.params.songID];
   if (!song) {
-    return <p>404 Song Not Found</p>;
+    return <NotFoundPage />;
   }
 
   return (
@@ -72,23 +76,15 @@ export function SongDetail() {
 
 export function GameIndexPage() {
   const { t } = useTranslateFunc();
-  const { gameData, gameDataFailed } = useContext(DrawStateContext);
+  const { gameData, dataSetName, gameDataFailed } = useContext(
+    DrawStateContext
+  );
   const [flag, setSelectedFlag] = useState<string | undefined>(undefined);
   if (gameDataFailed) {
     return <NotFoundPage />;
   }
   if (!gameData) {
-    return (
-      <NonIdealState
-        icon={<Spinner />}
-        title={
-          <FormattedMessage
-            id="songs.loading"
-            defaultMessage="Loading game data"
-          />
-        }
-      />
-    );
+    return <LoadingGameData />;
   }
 
   return (
@@ -99,7 +95,7 @@ export function GameIndexPage() {
         onClose={() => setSelectedFlag(undefined)}
       >
         {flag && (
-          <div style={{ overflowY: "auto", maxHeight: "80vh" }}>
+          <div style={{ overflowY: "auto", maxHeight: "70vh" }}>
             <SongList
               songs={gameData.songs.filter(song => {
                 return (
@@ -111,18 +107,35 @@ export function GameIndexPage() {
           </div>
         )}
       </Dialog>
-      <HTMLSelect
-        value=""
-        onChange={e => {
-          setSelectedFlag(e.currentTarget.value);
-        }}
-        options={[
-          { label: "Show by flag", value: "" },
-          ...gameData.meta.flags.map(f => ({
-            value: f,
-            label: t("meta." + f)
-          }))
-        ]}
+      <NonIdealState
+        icon={IconNames.BUILD}
+        title="DDR.tools"
+        description="Are you ready to show me your moves?"
+        action={
+          <>
+            <HTMLSelect
+              value=""
+              onChange={e => {
+                setSelectedFlag(e.currentTarget.value);
+              }}
+              options={[
+                { label: "List songs by flag", value: "" },
+                ...gameData.meta.flags.map(f => ({
+                  value: f,
+                  label: t("meta." + f)
+                }))
+              ]}
+            />
+            <Divider />
+            <AnchorButton
+              href={`#/${dataSetName}/draw`}
+              icon={IconNames.PROJECTS}
+              intent={Intent.PRIMARY}
+            >
+              <FormattedMessage id="cardDraw" defaultMessage="Card Draw" />
+            </AnchorButton>
+          </>
+        }
       />
     </div>
   );
