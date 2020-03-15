@@ -14,15 +14,19 @@ export function Header() {
 
   const menu = (
     <Menu>
-      <Menu.Item href={`#/${dataSetName}`} icon={IconNames.HOME} text="Home" />
+      <Menu.Item
+        href={`#/${dataSetName}`}
+        icon={IconNames.HOME}
+        text={<FormattedMessage id="home" defaultMessage="Home" />}
+      />
       <Menu.Item
         href={`#/${dataSetName}/draw`}
-        icon={IconNames.LAYERS}
-        text="Card Draw"
+        icon={IconNames.PROJECTS}
+        text={<FormattedMessage id="cardDraw" defaultMessage="Card Draw" />}
       />
       <Menu.Item
         href="#/credits"
-        icon={IconNames.HELP}
+        icon={IconNames.ID_NUMBER}
         text={<FormattedMessage id="credits" />}
       />
       <Menu.Divider />
@@ -44,12 +48,7 @@ export function Header() {
       }}
     >
       <Navbar.Group>
-        <Popover
-          hasBackdrop={false}
-          content={menu}
-          autoFocus={false}
-          lazy={false}
-        >
+        <Popover hasBackdrop={false} content={menu} autoFocus={false}>
           <Button icon={IconNames.MENU} />
         </Popover>
       </Navbar.Group>

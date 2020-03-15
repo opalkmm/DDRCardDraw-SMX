@@ -65,7 +65,7 @@ export function DrawControls() {
       <ButtonGroup>
         <Button
           onClick={handleDraw}
-          icon={IconNames.DUPLICATE}
+          icon={IconNames.NEW_LAYERS}
           intent={Intent.PRIMARY}
         >
           <FormattedMessage id="draw" defaultMessage="Draw!" />

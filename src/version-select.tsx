@@ -33,7 +33,7 @@ export function VersionSelect() {
   return (
     <Menu.Item
       text={<FormattedMessage id="dataSource" />}
-      icon={IconNames.TIME}
+      icon={IconNames.APPLICATIONS}
     >
       {GAME_SETS.map(({ key, display }) => (
         <Menu.Item
