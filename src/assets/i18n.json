@@ -2,9 +2,7 @@
   "en": {
     "dataSource": "Game Version",
     "chartCount": "Number to draw",
-    "difficultyLevel": "Difficulty level",
-    "upperBound": "Upper bound (inclusive)",
-    "lowerBound": "Lower bound (inclusive)",
+    "difficultyLevel": "Difficulty range (inclusive)",
     "useWeightedDistributions": "Use Weighted Distributions",
     "style": "Style",
     "single": "Single",

@@ -15,8 +15,10 @@ interface DrawState {
   fuzzySearch: FuzzySearch<Song> | null;
   drawings: Drawing[];
   dataSetName: string;
-  lastDrawFailed: boolean;
-  drawSongs: (config: ConfigState) => void;
+  /**
+   * Returns false if no songs could be drawn
+   */
+  drawSongs: (config: ConfigState) => boolean;
   gameDataFailed: boolean;
 }
 
@@ -25,8 +27,9 @@ export const DrawStateContext = createContext<DrawState>({
   fuzzySearch: null,
   drawings: [],
   dataSetName: "",
-  lastDrawFailed: false,
-  drawSongs() {},
+  drawSongs() {
+    return false;
+  },
   gameDataFailed: false
 });
 
@@ -42,7 +45,6 @@ export class DrawStateManager extends Component<Props, DrawState> {
       fuzzySearch: null,
       drawings: [],
       dataSetName: props.dataSet || "",
-      lastDrawFailed: false,
       drawSongs: this.doDrawing,
       gameDataFailed: false
     };
@@ -90,8 +92,7 @@ export class DrawStateManager extends Component<Props, DrawState> {
     this.setState({
       fuzzySearch: null,
       dataSetName,
-      gameDataFailed: false,
-      lastDrawFailed: false
+      gameDataFailed: false
     });
 
     try {
@@ -137,20 +138,17 @@ export class DrawStateManager extends Component<Props, DrawState> {
 
   doDrawing = (config: ConfigState) => {
     if (!this.state.gameData) {
-      return;
+      return false;
     }
 
     const drawing = draw(this.state.gameData, config);
     if (!drawing.charts.length) {
-      this.setState({
-        lastDrawFailed: true
-      });
-      return;
+      return false;
     }
 
     this.setState(prevState => ({
-      drawings: [drawing, ...prevState.drawings].filter(Boolean),
-      lastDrawFailed: false
+      drawings: [drawing, ...prevState.drawings].filter(Boolean)
     }));
+    return true;
   };
 }

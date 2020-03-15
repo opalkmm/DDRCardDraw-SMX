@@ -13,7 +13,12 @@ import {
   Intent,
   Drawer,
   Position,
-  Tooltip
+  Tooltip,
+  ButtonGroup,
+  Divider,
+  NavbarDivider,
+  RangeSlider,
+  NumberRange
 } from "@blueprintjs/core";
 import { useTranslateFunc } from "../hooks/useTranslateFunc";
 import { IconNames } from "@blueprintjs/icons";
@@ -25,8 +30,21 @@ function preventDefault(e: { preventDefault(): void }) {
 
 export function DrawControls() {
   const [settingsOpen, setSettingsOpen] = useState(false);
-  const { lastDrawFailed, drawSongs } = useContext(DrawStateContext);
+  const [lastDrawFailed, setLastDrawFailed] = useState(false);
+  const { drawSongs } = useContext(DrawStateContext);
   const configState = useContext(ConfigStateContext);
+
+  function handleDraw() {
+    const couldDraw = drawSongs(configState);
+    if (couldDraw !== !lastDrawFailed) {
+      setLastDrawFailed(!couldDraw);
+    }
+  }
+
+  function openSettings() {
+    setSettingsOpen(open => !open);
+    setLastDrawFailed(false);
+  }
 
   return (
     <>
@@ -44,21 +62,24 @@ export function DrawControls() {
       >
         <SettingsDrawer />
       </Drawer>
-      <Button
-        icon={IconNames.SETTINGS}
-        onClick={() => setSettingsOpen(open => !open)}
-      >
-        <FormattedMessage id="settings.button" defaultMessage="Options" />
-      </Button>{" "}
-      <Tooltip
-        isOpen={lastDrawFailed}
-        content={<FormattedMessage id="controls.invalid" />}
-        intent={Intent.DANGER}
-      >
-        <Button onClick={() => drawSongs(configState)} intent={Intent.PRIMARY}>
+      <ButtonGroup>
+        <Button
+          onClick={handleDraw}
+          icon={IconNames.DUPLICATE}
+          intent={Intent.PRIMARY}
+        >
           <FormattedMessage id="draw" defaultMessage="Draw!" />
         </Button>
-      </Tooltip>
+        <Tooltip
+          isOpen={lastDrawFailed}
+          content={<FormattedMessage id="controls.invalid" />}
+          intent={Intent.DANGER}
+          usePortal={false}
+          position={Position.BOTTOM_RIGHT}
+        >
+          <Button icon={IconNames.COG} onClick={openSettings} />
+        </Tooltip>
+      </ButtonGroup>
     </>
   );
 }
@@ -107,6 +128,16 @@ export function SettingsDrawer() {
     });
   };
 
+  function handleBoundsChange([low, high]: NumberRange) {
+    if (low !== lowerBound || high !== upperBound) {
+      updateConfig(state => ({
+        ...state,
+        lowerBound: low,
+        upperBound: high
+      }));
+    }
+  }
+
   return (
     <form ref={form} className={cn(styles.form)} onSubmit={preventDefault}>
       <section className={styles.columns}>
@@ -124,24 +155,13 @@ export function SettingsDrawer() {
             />
           </FormGroup>
           <FormGroup label={t("difficultyLevel")}>
-            <FormGroup labelFor="upperBound" label={t("upperBound")}>
-              <NumericInput
-                id="upperBound"
-                onValueChange={handleUpperBoundChange}
-                value={upperBound}
-                min={lowerBound}
-                max={Math.max(lowerBound, lvlMax)}
-              />
-            </FormGroup>
-            <FormGroup labelFor="lowerBound" label={t("lowerBound")}>
-              <NumericInput
-                id="lowerBound"
-                onValueChange={handleLowerBoundChange}
-                value={lowerBound}
-                min={1}
-                max={upperBound}
-              />
-            </FormGroup>
+            <RangeSlider
+              value={[lowerBound, upperBound]}
+              min={1}
+              max={lvlMax}
+              onChange={handleBoundsChange}
+              labelStepSize={4}
+            />
           </FormGroup>
           <FormGroup>
             <Checkbox
