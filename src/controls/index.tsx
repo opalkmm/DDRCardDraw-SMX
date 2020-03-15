@@ -1,6 +1,5 @@
 import cn from "classnames";
 import { useContext, useRef, useState } from "react";
-import globalStyles from "../app.module.css";
 import { WeightsControls } from "./controls-weights";
 import styles from "./controls.module.css";
 import { DrawStateContext } from "../draw-state";
@@ -11,20 +10,63 @@ import {
   NumericInput,
   Checkbox,
   Button,
-  Intent
+  Intent,
+  Drawer,
+  Position,
+  Tooltip
 } from "@blueprintjs/core";
 import { useTranslateFunc } from "../hooks/useTranslateFunc";
 import { IconNames } from "@blueprintjs/icons";
+import { FormattedMessage } from "react-intl";
 
 function preventDefault(e: { preventDefault(): void }) {
   e.preventDefault();
 }
 
-export function Controls() {
+export function DrawControls() {
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const { lastDrawFailed, drawSongs } = useContext(DrawStateContext);
+  const configState = useContext(ConfigStateContext);
+
+  return (
+    <>
+      <Drawer
+        isOpen={settingsOpen}
+        position={Position.TOP}
+        size="auto"
+        onClose={() => setSettingsOpen(false)}
+        title={
+          <FormattedMessage
+            id="settings.title"
+            defaultMessage="Card Draw Options"
+          />
+        }
+      >
+        <SettingsDrawer />
+      </Drawer>
+      <Button
+        icon={IconNames.SETTINGS}
+        onClick={() => setSettingsOpen(open => !open)}
+      >
+        <FormattedMessage id="settings.button" defaultMessage="Options" />
+      </Button>{" "}
+      <Tooltip
+        isOpen={lastDrawFailed}
+        content={<FormattedMessage id="controls.invalid" />}
+        intent={Intent.DANGER}
+      >
+        <Button onClick={() => drawSongs(configState)} intent={Intent.PRIMARY}>
+          <FormattedMessage id="draw" defaultMessage="Draw!" />
+        </Button>
+      </Tooltip>
+    </>
+  );
+}
+
+export function SettingsDrawer() {
   const form = useRef<HTMLFormElement | null>(null);
-  const [collapsed, setCollapsed] = useState(true);
   const { t } = useTranslateFunc();
-  const { drawSongs, lastDrawFailed, gameData } = useContext(DrawStateContext);
+  const { gameData } = useContext(DrawStateContext);
   const configState = useContext(ConfigStateContext);
   const {
     useWeights,
@@ -65,17 +107,8 @@ export function Controls() {
     });
   };
 
-  const handleRandomize = (e: { preventDefault(): void }) => {
-    e.preventDefault();
-    drawSongs(configState);
-  };
-
   return (
-    <form
-      ref={form}
-      className={cn(styles.form, { [styles.collapsed]: collapsed })}
-      onSubmit={preventDefault}
-    >
+    <form ref={form} className={cn(styles.form)} onSubmit={preventDefault}>
       <section className={styles.columns}>
         <div className={styles.column}>
           <FormGroup labelFor="chartCount" label={t("chartCount")}>
@@ -170,7 +203,7 @@ export function Controls() {
           </FormGroup>
         </div>
         <div className={styles.column}>
-          {!!flags.length && !collapsed && (
+          {!!flags.length && (
             <FormGroup label={t("include")}>
               {flags.map(key => (
                 <label key={`${key}`}>
@@ -195,24 +228,10 @@ export function Controls() {
               ))}
             </FormGroup>
           )}
-          <div className={cn(globalStyles.padded, styles.buttons)}>
-            <Button
-              icon={collapsed ? IconNames.CARET_DOWN : IconNames.CARET_UP}
-              onClick={() => setCollapsed(!collapsed)}
-            >
-              {t(collapsed ? "controls.show" : "controls.hide")}
-            </Button>{" "}
-            <Button onClick={handleRandomize} intent={Intent.PRIMARY}>
-              {t("draw")}
-            </Button>
-          </div>
-          {!!lastDrawFailed && <div>{t("controls.invalid")}</div>}
         </div>
       </section>
 
-      {useWeights && !collapsed && (
-        <WeightsControls high={upperBound} low={lowerBound} />
-      )}
+      {useWeights && <WeightsControls high={upperBound} low={lowerBound} />}
     </form>
   );
 }

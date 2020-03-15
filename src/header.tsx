@@ -1,33 +1,22 @@
-import {
-  Navbar,
-  NavbarGroup,
-  Button,
-  Position,
-  Menu,
-  Popover
-} from "@blueprintjs/core";
-import { useRouteMatch } from "react-router-dom";
-import { SongSearch } from "./song-search";
+import { Navbar, Button, Menu, Popover, Intent } from "@blueprintjs/core";
 import { VersionSelect } from "./version-select";
 import { IconNames } from "@blueprintjs/icons";
 import { FormattedMessage } from "react-intl";
+import { ThemeToggle } from "./theme-toggle";
+import { LastUpdate } from "./last-update";
+import { useContext } from "react";
+import { DrawStateContext } from "./draw-state";
+import { Route } from "react-router-dom";
+import { DrawControls } from "./controls";
 
 export function Header() {
-  const match = useRouteMatch<{ dataSet: string }>("/:dataSet");
-
-  if (!match) {
-    return null;
-  }
+  const { dataSetName } = useContext(DrawStateContext);
 
   const menu = (
     <Menu>
+      <Menu.Item href={`#/${dataSetName}`} icon={IconNames.HOME} text="Home" />
       <Menu.Item
-        href={`#/${match.params.dataSet}`}
-        icon={IconNames.HOME}
-        text="Home"
-      />
-      <Menu.Item
-        href={`#/${match.params.dataSet}/draw`}
+        href={`#/${dataSetName}/draw`}
         icon={IconNames.LAYERS}
         text="Card Draw"
       />
@@ -37,7 +26,9 @@ export function Header() {
         text={<FormattedMessage id="credits" />}
       />
       <Menu.Divider />
+      <ThemeToggle />
       <VersionSelect />
+      <LastUpdate />
     </Menu>
   );
 
@@ -52,19 +43,21 @@ export function Header() {
         justifyContent: "space-between"
       }}
     >
-      <NavbarGroup>
+      <Navbar.Group>
         <Popover
           hasBackdrop={false}
-          position={Position.LEFT}
           content={menu}
           autoFocus={false}
+          lazy={false}
         >
           <Button icon={IconNames.MENU} />
         </Popover>
-      </NavbarGroup>
-      <NavbarGroup>
-        <SongSearch />
-      </NavbarGroup>
+      </Navbar.Group>
+      <Navbar.Group>
+        <Route exact path="/:dataSet/draw">
+          <DrawControls />
+        </Route>
+      </Navbar.Group>
     </Navbar>
   );
 }

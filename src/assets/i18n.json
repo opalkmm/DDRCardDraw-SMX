@@ -1,6 +1,6 @@
 {
   "en": {
-    "dataSource": "Version",
+    "dataSource": "Game Version",
     "chartCount": "Number to draw",
     "difficultyLevel": "Difficulty level",
     "upperBound": "Upper bound (inclusive)",

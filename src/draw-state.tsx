@@ -77,46 +77,62 @@ export class DrawStateManager extends Component<Props, DrawState> {
     );
   }
 
-  loadSongSet = (dataSetName: string) => {
+  loadSongSet = async (dataSetName: string) => {
+    if (!dataSetName) {
+      return; // don't attempt to load an empty data set
+    }
+
+    // remember current state, if good
+    const prevDataSet =
+      this.state.gameData &&
+      !this.state.gameDataFailed &&
+      this.state.dataSetName;
     this.setState({
-      gameData: null,
-      drawings: [],
       fuzzySearch: null,
       dataSetName,
       gameDataFailed: false,
       lastDrawFailed: false
     });
 
-    import(/* webpackChunkName: "songData" */ `./songs/${dataSetName}.json`)
-      .then(({ default: data }) => {
-        if (this.state.dataSetName !== dataSetName) {
-          return; // we're already using a different data set now, discard this one
+    try {
+      const data: GameData = await import(
+        /* webpackChunkName: "songData" */ `./songs/${dataSetName}.json`
+      );
+
+      if (this.state.dataSetName !== dataSetName) {
+        return; // we're already using a different data set now, discard this one
+      }
+      const fuzzySearch = new FuzzySearch(
+        data.songs,
+        [
+          "name",
+          "name_translation",
+          "artist",
+          "artist_translation",
+          "search_hint"
+        ],
+        {
+          sort: true
         }
-        this.setState({
-          gameData: data,
-          fuzzySearch: new FuzzySearch(
-            data.songs,
-            [
-              "name",
-              "name_translation",
-              "artist",
-              "artist_translation",
-              "search_hint"
-            ],
-            {
-              sort: true
-            }
-          )
-        });
-      })
-      .catch(() => {
-        if (this.state.dataSetName !== dataSetName) {
-          return; // may have had an error, but we're already using a different data set now
-        }
-        this.setState({
-          gameDataFailed: true
-        });
+      );
+      this.setState({
+        gameData: data,
+        fuzzySearch
       });
+    } catch {
+      if (this.state.dataSetName !== dataSetName) {
+        return; // may have had an error, but we're already using a different data set now
+      }
+      if (prevDataSet) {
+        // roll back to last known good state
+        this.loadSongSet(prevDataSet);
+      } else if (!this.state.gameDataFailed || this.state.dataSetName) {
+        this.setState({
+          gameDataFailed: true,
+          dataSetName: ""
+        });
+      }
+    }
   };
 
   doDrawing = (config: ConfigState) => {

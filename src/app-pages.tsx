@@ -1,29 +1,21 @@
-import { Switch, Route, Redirect } from "react-router-dom";
-import { SongsPage, SongDetail } from "./songs-page";
-import { Controls } from "./controls";
+import { Switch, Route } from "react-router-dom";
 import { DrawingList } from "./drawing-list";
 import { NotFoundPage } from "./not-found-page";
-import { useContext } from "react";
-import { DrawStateContext } from "./draw-state";
+import { AboutPage } from "./about";
+import { GameIndexPage, SongDetail } from "./game-index-page";
 
 export function AppPages() {
-  const gameDataNotFound = useContext(DrawStateContext).gameDataFailed;
-  if (gameDataNotFound) {
-    return <NotFoundPage />;
-  }
-
   return (
     <Switch>
-      <Route exact path="/:dataSet" component={SongsPage} />
-      <Route path="/:dataSet/song/:songIndex" component={SongDetail} />
-      <Route exact path="/:dataSet/draw">
-        <Controls />
-        <DrawingList />
+      <Route exact path="/credits" component={AboutPage} />
+      <Route path="/:dataSet">
+        <Switch>
+          <Route path="/:dataSet/song/:songIndex" component={SongDetail} />
+          <Route exact path="/:dataSet/draw" component={DrawingList} />
+          <Route path="/:dataSet/:anything" component={NotFoundPage} />
+          <Route exact path="/:dataSet" component={GameIndexPage} />
+        </Switch>
       </Route>
-      <Route exact path="/">
-        <Redirect to="/a20" />
-      </Route>
-      <Route path="/:anything*" component={NotFoundPage} />
     </Switch>
   );
 }

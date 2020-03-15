@@ -1,4 +1,10 @@
-import { HTMLSelect, UL, Dialog } from "@blueprintjs/core";
+import {
+  HTMLSelect,
+  UL,
+  Dialog,
+  NonIdealState,
+  Spinner
+} from "@blueprintjs/core";
 import { useContext, useState } from "react";
 import { DrawStateContext } from "./draw-state";
 import { Chart } from "./models/SongData";
@@ -8,6 +14,9 @@ import { SongList } from "./song-list";
 import styles from "./songs-page.module.css";
 import { useTranslateFunc } from "./hooks/useTranslateFunc";
 import { useRouteMatch } from "react-router-dom";
+import { NotFoundPage } from "./not-found-page";
+import { IconNames } from "@blueprintjs/icons";
+import { FormattedMessage } from "react-intl";
 
 function FlagsList({ flags }: { flags: string[] | undefined }) {
   return (
@@ -61,12 +70,25 @@ export function SongDetail() {
   );
 }
 
-export function SongsPage() {
+export function GameIndexPage() {
   const { t } = useTranslateFunc();
-  const { gameData } = useContext(DrawStateContext);
+  const { gameData, gameDataFailed } = useContext(DrawStateContext);
   const [flag, setSelectedFlag] = useState<string | undefined>(undefined);
+  if (gameDataFailed) {
+    return <NotFoundPage />;
+  }
   if (!gameData) {
-    return <div>No game data loaded yet</div>;
+    return (
+      <NonIdealState
+        icon={<Spinner />}
+        title={
+          <FormattedMessage
+            id="songs.loading"
+            defaultMessage="Loading game data"
+          />
+        }
+      />
+    );
   }
 
   return (

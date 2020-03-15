@@ -2,7 +2,7 @@ import { useTranslateFunc } from "./hooks/useTranslateFunc";
 import { AnchorButton, ButtonGroup, UL } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
 
-export function About() {
+export function AboutPage() {
   const { t } = useTranslateFunc();
 
   return (

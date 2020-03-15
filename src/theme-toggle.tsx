@@ -1,32 +1,46 @@
-import { useDarkThemePreference } from "./hooks/useDarkThemePreference";
+import {
+  useDarkThemePreference,
+  prefersDarkQuery
+} from "./hooks/useDarkThemePreference";
 import { useEffect, useState } from "react";
-import { Classes, Button, Tooltip } from "@blueprintjs/core";
+import { Classes, Button, Tooltip, MenuItem } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
+import { FormattedMessage } from "react-intl";
 
-enum Preference {
+enum Theme {
   Light = "light",
   Dark = "dark"
 }
 
-export function ThemeToggle() {
-  const systemPrefersDark = useDarkThemePreference();
-  const [override, setOverride] = useState<Preference | undefined>(undefined);
-  const useDark =
-    override === undefined ? systemPrefersDark : override === Preference.Dark;
-  useEffect(() => {
-    document.body.classList.toggle(Classes.DARK, useDark);
-  }, [useDark]);
+function getTheme() {
+  return document.body.classList.contains(Classes.DARK)
+    ? Theme.Dark
+    : Theme.Light;
+}
 
-  const icon = useDark ? IconNames.FLASH : IconNames.MOON;
+function applyTheme(dark: boolean) {
+  document.body.classList.toggle(Classes.DARK, dark);
+}
+
+export function applySystemTheme() {
+  applyTheme(prefersDarkQuery.matches);
+}
+
+export function ThemeToggle({}) {
+  const [theme, setTheme] = useState<Theme>(getTheme());
+  useEffect(() => {
+    applyTheme(theme === Theme.Dark);
+  }, [theme]);
+
+  const icon = theme === Theme.Dark ? IconNames.FLASH : IconNames.MOON;
 
   return (
-    <Tooltip content="Toggle theme">
-      <Button
-        icon={icon}
-        onClick={() =>
-          setOverride(useDark ? Preference.Light : Preference.Dark)
-        }
-      />
-    </Tooltip>
+    <MenuItem
+      icon={icon}
+      text={
+        <FormattedMessage id="toggle-theme" defaultMessage="Toggle Theme" />
+      }
+      onClick={() => setTheme(theme === Theme.Dark ? Theme.Light : Theme.Dark)}
+    />
   );
 }

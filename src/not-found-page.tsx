@@ -2,7 +2,11 @@ import { NonIdealState, Card } from "@blueprintjs/core";
 import { FormattedMessage } from "react-intl";
 import styles from "./not-found-page.module.css";
 
-export function NotFoundPage() {
+interface Props {
+  action?: JSX.Element;
+}
+
+export function NotFoundPage(props: Props) {
   return (
     <NonIdealState
       description={
@@ -20,6 +24,7 @@ export function NotFoundPage() {
           </div>
         </Card>
       }
+      action={props.action}
     />
   );
 }
