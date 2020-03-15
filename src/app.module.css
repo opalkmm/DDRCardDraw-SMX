@@ -49,5 +49,5 @@ input[type="week"],
 select,
 textarea,
 button {
-  font-size: 16px;
+  font-size: 16px !important;
 } /* avoid iOS auto-zoom */

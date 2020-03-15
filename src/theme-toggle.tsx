@@ -1,6 +1,6 @@
 import { useDarkThemePreference } from "./hooks/useDarkThemePreference";
 import { useEffect, useState } from "react";
-import { Classes, Button, Pre, Tooltip } from "@blueprintjs/core";
+import { Classes, Button, Tooltip } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
 
 enum Preference {

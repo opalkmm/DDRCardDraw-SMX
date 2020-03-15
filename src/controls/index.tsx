@@ -136,6 +136,7 @@ export function Controls() {
                   return { ...s, style };
                 });
               }}
+              large
             >
               {gameStyles.map(style => (
                 <option key={style} value={style}>

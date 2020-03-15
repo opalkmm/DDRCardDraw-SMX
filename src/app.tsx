@@ -5,26 +5,15 @@ import "regenerator-runtime/runtime";
 
 import "./firebase";
 import { render } from "react-dom";
-import { useEffect } from "react";
-import { Controls } from "./controls";
-import { DrawingList } from "./drawing-list";
 import { Footer } from "./footer";
 import { AuthManager } from "./auth";
 import { UpdateManager } from "./update-manager";
 import { DrawStateManager } from "./draw-state";
 import styles from "./app.module.css";
 import { ConfigStateManager } from "./config-state";
-import { SongsPage, SongDetail } from "./songs-page";
 import { Header } from "./header";
-import { useDarkThemePreference } from "./hooks/useDarkThemePreference";
-import { Classes } from "@blueprintjs/core";
-import {
-  BrowserRouter,
-  Redirect,
-  Route,
-  Switch,
-  useRouteMatch
-} from "react-router-dom";
+import { HashRouter as Router, useRouteMatch } from "react-router-dom";
+import { AppPages } from "./app-pages";
 
 function App() {
   const match = useRouteMatch<{ dataSet: string }>("/:dataSet/");
@@ -34,20 +23,7 @@ function App() {
       <UpdateManager />
       <Header />
       <div className={styles.scrollable}>
-        <Switch>
-          <Route exact path="/:dataSet" component={SongsPage} />
-          <Route path="/:dataSet/song/:songIndex" component={SongDetail} />
-          <Route exact path="/:dataSet/draw">
-            <Controls />
-            <DrawingList />
-          </Route>
-          <Route exact path="/">
-            <Redirect to="/a20" />
-          </Route>
-          <Route path="/:anything*">
-            <p>404 Not Found</p>
-          </Route>
-        </Switch>
+        <AppPages />
       </div>
       <Footer />
     </DrawStateManager>
@@ -56,13 +32,13 @@ function App() {
 
 function AppShell() {
   return (
-    <BrowserRouter>
+    <Router>
       <AuthManager>
         <ConfigStateManager>
           <App />
         </ConfigStateManager>
       </AuthManager>
-    </BrowserRouter>
+    </Router>
   );
 }
 

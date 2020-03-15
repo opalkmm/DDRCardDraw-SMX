@@ -1,27 +1,46 @@
-import cn from "classnames";
 import {
   Navbar,
-  NavbarDivider,
-  NavbarHeading,
   NavbarGroup,
-  Classes,
-  Alignment,
-  Icon,
-  ButtonGroup,
-  Tooltip
+  Button,
+  Position,
+  Menu,
+  Popover
 } from "@blueprintjs/core";
-import { NavLink, useRouteMatch } from "react-router-dom";
+import { useRouteMatch } from "react-router-dom";
 import { SongSearch } from "./song-search";
 import { VersionSelect } from "./version-select";
 import { IconNames } from "@blueprintjs/icons";
-
-const minButton = cn(Classes.BUTTON);
+import { FormattedMessage } from "react-intl";
 
 export function Header() {
   const match = useRouteMatch<{ dataSet: string }>("/:dataSet");
+
   if (!match) {
     return null;
   }
+
+  const menu = (
+    <Menu>
+      <Menu.Item
+        href={`/${match.params.dataSet}`}
+        icon={IconNames.HOME}
+        text="Home"
+      />
+      <Menu.Item
+        href={`/${match.params.dataSet}/draw`}
+        icon={IconNames.LAYERS}
+        text="Card Draw"
+      />
+      <Menu.Item
+        href="/credits"
+        icon={IconNames.HELP}
+        text={<FormattedMessage id="credits" />}
+      />
+      <Menu.Divider />
+      <VersionSelect />
+    </Menu>
+  );
+
   return (
     <Navbar
       id="HeaderNav"
@@ -33,31 +52,17 @@ export function Header() {
         justifyContent: "space-between"
       }}
     >
-      <NavbarGroup align={Alignment.CENTER}>
-        <VersionSelect />{" "}
-        <ButtonGroup minimal>
-          <Tooltip content="Home">
-            <NavLink
-              to={`/${match.params.dataSet}`}
-              activeClassName={Classes.ACTIVE}
-              exact
-              className={minButton}
-            >
-              <Icon icon={IconNames.HOME} />
-            </NavLink>
-          </Tooltip>{" "}
-          <Tooltip content="Card Draw">
-            <NavLink
-              to={`/${match.params.dataSet}/draw`}
-              activeClassName={Classes.ACTIVE}
-              className={minButton}
-            >
-              <Icon icon={IconNames.LAYERS} />
-            </NavLink>
-          </Tooltip>
-        </ButtonGroup>
+      <NavbarGroup>
+        <Popover
+          hasBackdrop={false}
+          position={Position.LEFT}
+          content={menu}
+          autoFocus={false}
+        >
+          <Button icon={IconNames.MENU} />
+        </Popover>
       </NavbarGroup>
-      <NavbarGroup align={Alignment.CENTER}>
+      <NavbarGroup>
         <SongSearch />
       </NavbarGroup>
     </Navbar>

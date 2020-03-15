@@ -3,7 +3,7 @@ import styles from "./controls-weights.module.css";
 import { times } from "../utils";
 import { useIntl } from "react-intl";
 import { ConfigStateContext } from "../config-state";
-import { NumericInput, Switch, Checkbox } from "@blueprintjs/core";
+import { NumericInput, Checkbox } from "@blueprintjs/core";
 
 interface Props {
   high: number;

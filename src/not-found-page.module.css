@@ -1,0 +1,26 @@
+.notFoundCard {
+  background-color: #445 !important;
+  background-image: linear-gradient(
+      335deg,
+      rgb(51, 30, 6) 23px,
+      transparent 23px
+    ),
+    linear-gradient(155deg, rgb(41, 31, 2) 23px, transparent 23px),
+    linear-gradient(335deg, rgb(51, 30, 6) 23px, transparent 23px),
+    linear-gradient(155deg, rgb(41, 31, 2) 23px, transparent 23px);
+  background-size: 58px 58px;
+  background-position: 0px 2px, 4px 35px, 29px 31px, 34px 6px;
+  color: white;
+}
+
+.notFoundCard .notFoundHeader {
+  font-size: 58px;
+  font-stretch: ultra-condensed;
+  -webkit-text-stroke: 2px white;
+  opacity: 0.5;
+  color: red;
+  font-family: Impact, "DIN Condensed", "Arial Narrow", sans-serif;
+  transform: rotate(-20deg);
+  margin: 0;
+  margin-bottom: 2rem;
+}

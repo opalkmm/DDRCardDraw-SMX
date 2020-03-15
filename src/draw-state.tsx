@@ -17,6 +17,7 @@ interface DrawState {
   dataSetName: string;
   lastDrawFailed: boolean;
   drawSongs: (config: ConfigState) => void;
+  gameDataFailed: boolean;
 }
 
 export const DrawStateContext = createContext<DrawState>({
@@ -25,7 +26,8 @@ export const DrawStateContext = createContext<DrawState>({
   drawings: [],
   dataSetName: "",
   lastDrawFailed: false,
-  drawSongs() {}
+  drawSongs() {},
+  gameDataFailed: false
 });
 
 interface Props {
@@ -41,7 +43,8 @@ export class DrawStateManager extends Component<Props, DrawState> {
       drawings: [],
       dataSetName: props.dataSet || "",
       lastDrawFailed: false,
-      drawSongs: this.doDrawing
+      drawSongs: this.doDrawing,
+      gameDataFailed: false
     };
   }
 
@@ -77,31 +80,39 @@ export class DrawStateManager extends Component<Props, DrawState> {
   loadSongSet = (dataSetName: string) => {
     this.setState({
       gameData: null,
-      dataSetName
+      drawings: [],
+      fuzzySearch: null,
+      dataSetName,
+      gameDataFailed: false
     });
 
     return import(
       /* webpackChunkName: "songData" */ `./songs/${dataSetName}.json`
-    ).then(({ default: data }) => {
-      this.setState({
-        gameData: data,
-        drawings: [],
-        fuzzySearch: new FuzzySearch(
-          data.songs,
-          [
-            "name",
-            "name_translation",
-            "artist",
-            "artist_translation",
-            "search_hint"
-          ],
-          {
-            sort: true
-          }
-        )
+    )
+      .then(({ default: data }) => {
+        this.setState({
+          gameData: data,
+          fuzzySearch: new FuzzySearch(
+            data.songs,
+            [
+              "name",
+              "name_translation",
+              "artist",
+              "artist_translation",
+              "search_hint"
+            ],
+            {
+              sort: true
+            }
+          )
+        });
+        return data;
+      })
+      .catch(e => {
+        this.setState({
+          gameDataFailed: true
+        });
       });
-      return data;
-    });
   };
 
   doDrawing = (config: ConfigState) => {
