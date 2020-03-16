@@ -1,7 +1,6 @@
 import { InputGroup, Popover, PopoverInteractionKind } from "@blueprintjs/core";
 import { useContext, useState, useRef } from "react";
 import { DrawStateContext } from "./draw-state";
-import styles from "./song-search.module.css";
 import { Song, Chart } from "./models/SongData";
 import { SongList } from "./song-list";
 import { IconNames } from "@blueprintjs/icons";
