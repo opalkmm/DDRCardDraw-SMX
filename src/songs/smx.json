@@ -499,7 +499,7 @@
       "charts": [
         { "style": "fun", "lvl": 2, "diffClass": "basic" },
         { "style": "fun", "lvl": 10, "diffClass": "easy" },
-        { "style": "fun", "lvl": 16, "diffClass": "hard" },
+        { "style": "fun", "lvl": 17, "diffClass": "hard" },
         { "style": "fun", "lvl": 19, "diffClass": "wild" },
         { "style": "fun", "lvl": 9, "diffClass": "dual" },
         { "style": "fun", "lvl": 17, "diffClass": "full" }
@@ -2690,7 +2690,7 @@
         { "style": "fun", "lvl": 2, "diffClass": "basic" },
         { "style": "fun", "lvl": 8, "diffClass": "easy" },
         { "style": "fun", "lvl": 16, "diffClass": "hard" },
-        { "style": "fun", "lvl": 24, "diffClass": "wild" },
+        { "style": "fun", "lvl": 23, "diffClass": "wild" },
         { "style": "fun", "lvl": 8, "diffClass": "dual" },
         { "style": "fun", "lvl": 24, "diffClass": "full" }
       ]
@@ -2706,7 +2706,7 @@
         { "style": "fun", "lvl": 8, "diffClass": "easy" },
         { "style": "fun", "lvl": 16, "diffClass": "hard" },
         { "style": "fun", "lvl": 23, "diffClass": "wild" },
-        { "style": "fun", "lvl": 18, "diffClass": "dual" },
+        { "style": "fun", "lvl": 17, "diffClass": "dual" },
         { "style": "fun", "lvl": 22, "diffClass": "full" }
       ]
     },
@@ -2722,7 +2722,7 @@
         { "style": "fun", "lvl": 17, "diffClass": "hard" },
         { "style": "fun", "lvl": 21, "diffClass": "wild" },
         { "style": "fun", "lvl": 18, "diffClass": "dual" },
-        { "style": "fun", "lvl": 20, "diffClass": "full" }
+        { "style": "fun", "lvl": 21, "diffClass": "full" }
       ]
     },
     {
@@ -2795,7 +2795,7 @@
         { "style": "fun", "lvl": 3, "diffClass": "basic" },
         { "style": "fun", "lvl": 12, "diffClass": "easy" },
         { "style": "fun", "lvl": 17, "diffClass": "hard" },
-        { "style": "fun", "lvl": 23, "diffClass": "wild" },
+        { "style": "fun", "lvl": 22, "diffClass": "wild" },
         { "style": "fun", "lvl": 18, "diffClass": "dual" },
         { "style": "fun", "lvl": 24, "diffClass": "full" }
       ]
@@ -2813,6 +2813,141 @@
         { "style": "fun", "lvl": 24, "diffClass": "wild" },
         { "style": "fun", "lvl": 20, "diffClass": "dual" },
         { "style": "fun", "lvl": 24, "diffClass": "full" }
+      ]
+    },
+    {
+      "name": "Fantasy",
+      "artist": "Melissa",
+      "genre": "Eurobeat",
+      "bpm": "160",
+      "jacket": "smx/Fantasy.jpg",
+      "charts": [
+        { "style": "fun", "lvl": 3, "diffClass": "basic" },
+        { "style": "fun", "lvl": 11, "diffClass": "easy" },
+        { "style": "fun", "lvl": 16, "diffClass": "hard" },
+        { "style": "fun", "lvl": 21, "diffClass": "wild" },
+        { "style": "fun", "lvl": 20, "diffClass": "dual" },
+        { "style": "fun", "lvl": 23, "diffClass": "full" }
+      ]
+    },
+    {
+      "name": "Get Lifted",
+      "artist": "HOT KICKS",
+      "genre": "Pop",
+      "bpm": "120",
+      "jacket": "smx/GetLifted.jpg",
+      "charts": [
+        { "style": "fun", "lvl": 2, "diffClass": "basic" },
+        { "style": "fun", "lvl": 8, "diffClass": "easy" },
+        { "style": "fun", "lvl": 15, "diffClass": "hard" },
+        { "style": "fun", "lvl": 21, "diffClass": "wild" },
+        { "style": "fun", "lvl": 18, "diffClass": "dual" },
+        { "style": "fun", "lvl": 20, "diffClass": "full" }
+      ]
+    },
+    {
+      "name": "In My Dreams",
+      "artist": "Rebecca",
+      "genre": "Eurodance",
+      "bpm": "145",
+      "jacket": "smx/InMyDreams.jpg",
+      "charts": [
+        { "style": "fun", "lvl": 1, "diffClass": "basic" },
+        { "style": "fun", "lvl": 8, "diffClass": "easy" },
+        { "style": "fun", "lvl": 16, "diffClass": "hard" },
+        { "style": "fun", "lvl": 20, "diffClass": "wild" },
+        { "style": "fun", "lvl": 16, "diffClass": "dual" },
+        { "style": "fun", "lvl": 18, "diffClass": "full" }
+      ]
+    },
+    {
+      "name": "Living In America",
+      "artist": "Rose & John",
+      "genre": "Eurobeat",
+      "bpm": "169",
+      "jacket": "smx/LivingInAmerica.jpg",
+      "charts": [
+        { "style": "fun", "lvl": 2, "diffClass": "basic" },
+        { "style": "fun", "lvl": 12, "diffClass": "easy" },
+        { "style": "fun", "lvl": 16, "diffClass": "hard" },
+        { "style": "fun", "lvl": 22, "diffClass": "wild" },
+        { "style": "fun", "lvl": 16, "diffClass": "dual" },
+        { "style": "fun", "lvl": 17, "diffClass": "full" }
+      ]
+    },
+    {
+      "name": "Speed Over Beethoven",
+      "artist": "Rose",
+      "genre": "Classical Techno",
+      "bpm": "169",
+      "jacket": "smx/SpeedOverBeethoven.jpg",
+      "charts": [
+        { "style": "fun", "lvl": 4, "diffClass": "basic" },
+        { "style": "fun", "lvl": 8, "diffClass": "easy" },
+        { "style": "fun", "lvl": 17, "diffClass": "hard" },
+        { "style": "fun", "lvl": 22, "diffClass": "wild" },
+        { "style": "fun", "lvl": 19, "diffClass": "dual" },
+        { "style": "fun", "lvl": 19, "diffClass": "full" }
+      ]
+    },
+    {
+      "name": "Come On Now",
+      "artist": "Miss Amani",
+      "genre": "Pop",
+      "bpm": "128",
+      "jacket": "smx/ComeOnNow.jpg",
+      "charts": [
+        { "style": "fun", "lvl": 2, "diffClass": "basic" },
+        { "style": "fun", "lvl": 10, "diffClass": "easy" },
+        { "style": "fun", "lvl": 15, "diffClass": "hard" },
+        { "style": "fun", "lvl": 20, "diffClass": "wild" },
+        { "style": "fun", "lvl": 19, "diffClass": "dual" },
+        { "style": "fun", "lvl": 21, "diffClass": "full" }
+      ]
+    },
+    {
+      "name": "Dam Dadi Doo",
+      "artist": "Fantasy Project",
+      "genre": "Eurodance",
+      "bpm": "152",
+      "jacket": "smx/DamDadiDoo.jpg",
+      "charts": [
+        { "style": "fun", "lvl": 2, "diffClass": "basic" },
+        { "style": "fun", "lvl": 10, "diffClass": "easy" },
+        { "style": "fun", "lvl": 17, "diffClass": "hard" },
+        { "style": "fun", "lvl": 22, "diffClass": "wild" },
+        { "style": "fun", "lvl": 18, "diffClass": "dual" },
+        { "style": "fun", "lvl": 20, "diffClass": "full" }
+      ]
+    },
+    {
+      "name": "Devil Inside",
+      "artist": "CRMNL",
+      "genre": "Alternative",
+      "bpm": "86",
+      "jacket": "smx/DevilInside.jpg",
+      "charts": [
+        { "style": "fun", "lvl": 2, "diffClass": "basic" },
+        { "style": "fun", "lvl": 7, "diffClass": "easy" },
+        { "style": "fun", "lvl": 13, "diffClass": "hard" },
+        { "style": "fun", "lvl": 19, "diffClass": "wild" },
+        { "style": "fun", "lvl": 12, "diffClass": "dual" },
+        { "style": "fun", "lvl": 20, "diffClass": "full" }
+      ]
+    },
+    {
+      "name": "Dolphin Talk",
+      "artist": "Pyramyth",
+      "genre": "Glitch Hop",
+      "bpm": "110",
+      "jacket": "smx/DolphinTalk.jpg",
+      "charts": [
+        { "style": "fun", "lvl": 3, "diffClass": "basic" },
+        { "style": "fun", "lvl": 9, "diffClass": "easy" },
+        { "style": "fun", "lvl": 15, "diffClass": "hard" },
+        { "style": "fun", "lvl": 23, "diffClass": "wild" },
+        { "style": "fun", "lvl": 20, "diffClass": "dual" },
+        { "style": "fun", "lvl": 22, "diffClass": "full" }
       ]
     }
   ]
