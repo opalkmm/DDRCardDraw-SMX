@@ -19,7 +19,7 @@
   },
   "i18n": {
     "en": {
-      "name": "Extreme",
+      "name": "DDR Extreme",
       "single": "Single",
       "double": "Double",
       "basic": "Light",
@@ -34,7 +34,7 @@
       }
     },
     "ja": {
-      "name": "Extreme",
+      "name": "DDR Extreme",
       "single": "Single",
       "double": "Double",
       "basic": "Light",
@@ -6556,7 +6556,7 @@
       "charts": [
         { "step": 176, "lvl": 4, "style": "single", "diffClass": "basic" },
         { "step": 196, "lvl": 5, "style": "single", "diffClass": "difficult" },
-        { "step": 333, "lvl": 7, "style": "single", "diffClass": "expert" },
+        { "step": 333, "lvl": 8, "style": "single", "diffClass": "expert" },
         { "step": 178, "lvl": 4, "style": "double", "diffClass": "basic" },
         { "step": 224, "lvl": 5, "style": "double", "diffClass": "difficult" },
         { "step": 334, "lvl": 8, "style": "double", "diffClass": "expert" }

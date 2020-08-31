@@ -1,26 +1,25 @@
-import { Navbar, Button, Menu, Popover, Intent } from "@blueprintjs/core";
+import { Navbar, Button, Menu, Popover } from "@blueprintjs/core";
 import { VersionSelect } from "./version-select";
 import { IconNames } from "@blueprintjs/icons";
 import { FormattedMessage } from "react-intl";
 import { ThemeToggle } from "./theme-toggle";
 import { LastUpdate } from "./last-update";
-import { useContext } from "react";
-import { DrawStateContext } from "./draw-state";
 import { Route } from "react-router-dom";
 import { DrawControls } from "./controls";
+import { useDataSets } from "./hooks/useDataSets";
 
 export function Header() {
-  const { dataSetName } = useContext(DrawStateContext);
+  const { current } = useDataSets();
 
   const menu = (
     <Menu>
       <Menu.Item
-        href={`#/${dataSetName}`}
+        href={`#/${current.name}`}
         icon={IconNames.HOME}
         text={<FormattedMessage id="home" defaultMessage="Home" />}
       />
       <Menu.Item
-        href={`#/${dataSetName}/draw`}
+        href={`#/${current.name}/draw`}
         icon={IconNames.PROJECTS}
         text={<FormattedMessage id="cardDraw" defaultMessage="Card Draw" />}
       />
@@ -44,7 +43,7 @@ export function Header() {
         top: 0,
         display: "flex",
         flexDirection: "row",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
       }}
     >
       <Navbar.Group>

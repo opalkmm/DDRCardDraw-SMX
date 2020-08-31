@@ -15,10 +15,8 @@ import {
   Position,
   Tooltip,
   ButtonGroup,
-  Divider,
-  NavbarDivider,
   RangeSlider,
-  NumberRange
+  NumberRange,
 } from "@blueprintjs/core";
 import { useTranslateFunc } from "../hooks/useTranslateFunc";
 import { IconNames } from "@blueprintjs/icons";
@@ -42,7 +40,7 @@ export function DrawControls() {
   }
 
   function openSettings() {
-    setSettingsOpen(open => !open);
+    setSettingsOpen((open) => !open);
     setLastDrawFailed(false);
   }
 
@@ -97,43 +95,19 @@ export function SettingsDrawer() {
     difficulties: selectedDifficulties,
     flags: selectedFlags,
     style: selectedStyle,
-    chartCount
+    chartCount,
   } = configState;
   if (!gameData) {
     return null;
   }
   const { difficulties, flags, lvlMax, styles: gameStyles } = gameData.meta;
 
-  const handleLowerBoundChange = (newValue: number) => {
-    if (newValue > upperBound) {
-      return;
-    }
-    updateConfig(state => {
-      return {
-        ...state,
-        lowerBound: newValue
-      };
-    });
-  };
-
-  const handleUpperBoundChange = (newValue: number) => {
-    if (newValue < lowerBound) {
-      return;
-    }
-    updateConfig(state => {
-      return {
-        ...state,
-        upperBound: newValue
-      };
-    });
-  };
-
   function handleBoundsChange([low, high]: NumberRange) {
     if (low !== lowerBound || high !== upperBound) {
-      updateConfig(state => ({
+      updateConfig((state) => ({
         ...state,
         lowerBound: low,
-        upperBound: high
+        upperBound: high,
       }));
     }
   }
@@ -147,8 +121,8 @@ export function SettingsDrawer() {
               id="chartCount"
               value={chartCount}
               min={1}
-              onValueChange={chartCount => {
-                updateConfig(s => {
+              onValueChange={(chartCount) => {
+                updateConfig((s) => {
                   return { ...s, chartCount };
                 });
               }}
@@ -167,11 +141,11 @@ export function SettingsDrawer() {
             <Checkbox
               id="weighted"
               checked={useWeights}
-              onChange={e => {
+              onChange={(e) => {
                 const useWeights = !!e.currentTarget.checked;
-                updateConfig(state => ({
+                updateConfig((state) => ({
                   ...state,
-                  useWeights
+                  useWeights,
                 }));
               }}
               label={t("useWeightedDistributions")}
@@ -183,15 +157,15 @@ export function SettingsDrawer() {
             <HTMLSelect
               id="style"
               value={selectedStyle}
-              onChange={e => {
+              onChange={(e) => {
                 const style = e.currentTarget.value;
-                updateConfig(s => {
+                updateConfig((s) => {
                   return { ...s, style };
                 });
               }}
               large
             >
-              {gameStyles.map(style => (
+              {gameStyles.map((style) => (
                 <option key={style} value={style}>
                   {t("meta." + style)}
                 </option>
@@ -199,15 +173,15 @@ export function SettingsDrawer() {
             </HTMLSelect>
           </FormGroup>
           <FormGroup label={t("difficulties")}>
-            {difficulties.map(dif => (
+            {difficulties.map((dif) => (
               <Checkbox
                 key={`${dif.key}`}
                 name="difficulties"
                 value={dif.key}
                 checked={selectedDifficulties.has(dif.key)}
-                onChange={e => {
+                onChange={(e) => {
                   const { checked, value } = e.currentTarget;
-                  updateConfig(s => {
+                  updateConfig((s) => {
                     const difficulties = new Set(s.difficulties);
                     if (checked) {
                       difficulties.add(value);
@@ -225,14 +199,14 @@ export function SettingsDrawer() {
         <div className={styles.column}>
           {!!flags.length && (
             <FormGroup label={t("include")}>
-              {flags.map(key => (
+              {flags.map((key) => (
                 <label key={`${key}`}>
                   <Checkbox
                     name="inclusions"
                     value={key}
                     checked={selectedFlags.has(key)}
-                    onInput={e =>
-                      updateConfig(s => {
+                    onInput={(e) =>
+                      updateConfig((s) => {
                         const newFlags = new Set(s.flags);
                         if (newFlags.has(key)) {
                           newFlags.delete(key);

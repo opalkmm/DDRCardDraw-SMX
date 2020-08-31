@@ -1,32 +1,24 @@
 import { Menu } from "@blueprintjs/core";
 import { useHistory, useRouteMatch } from "react-router-dom";
-import { useContext } from "react";
-import { DrawStateContext } from "./draw-state";
 import { IconNames } from "@blueprintjs/icons";
 import { FormattedMessage } from "react-intl";
-
-const GAME_SETS = [
-  { key: "a20", display: "DDR A20" },
-  { key: "ace", display: "DDR Ace" },
-  { key: "extreme", display: "DDR Extreme" },
-  { key: "drs", display: "DANCERUSH" }
-];
+import { useDataSets } from "./hooks/useDataSets";
 
 export function VersionSelect() {
-  const { dataSetName } = useContext(DrawStateContext);
+  const { available, current } = useDataSets();
   const match = useRouteMatch<{ dataSetName: string }>("/:dataSetName");
   const history = useHistory();
 
-  const handleSongListChange = (v: string) => {
-    if (dataSetName === v) {
+  const handleSongListChange = (newName: string) => {
+    if (current.name === newName) {
       return;
     }
-    if (match && match.params.dataSetName === dataSetName) {
+    if (match && match.params.dataSetName === current.name) {
       history.push(
-        history.location.pathname.replace(`/${dataSetName}`, `/${v}`)
+        history.location.pathname.replace(`/${current.name}`, `/${newName}`)
       );
     } else {
-      history.push(`/${v}`);
+      history.push(`/${newName}`);
     }
   };
 
@@ -35,12 +27,12 @@ export function VersionSelect() {
       text={<FormattedMessage id="dataSource" />}
       icon={IconNames.APPLICATIONS}
     >
-      {GAME_SETS.map(({ key, display }) => (
+      {available.map(({ name, display }) => (
         <Menu.Item
-          key={key}
+          key={name}
           text={display}
-          active={key === dataSetName}
-          onClick={() => handleSongListChange(key)}
+          active={name === current.name}
+          onClick={() => handleSongListChange(name)}
         />
       ))}
     </Menu.Item>

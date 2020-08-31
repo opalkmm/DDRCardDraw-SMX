@@ -40,6 +40,7 @@ interface Props {
 export class DrawStateManager extends Component<Props, DrawState> {
   constructor(props: Props) {
     super(props);
+
     this.state = {
       gameData: null,
       fuzzySearch: null,

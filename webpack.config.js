@@ -1,4 +1,5 @@
-const { resolve } = require("path");
+const fs = require("fs");
+const { resolve, basename } = require("path");
 
 const autoprefixer = require("autoprefixer");
 const webpack = require("webpack");
@@ -29,23 +30,23 @@ module.exports = function(env = {}, argv = {}) {
     output: {
       filename: "[name].[hash:5].js",
       chunkFilename: "[name].[chunkhash:5].js",
-      path: resolve(__dirname, "./dist")
+      path: resolve(__dirname, "./dist"),
     },
     optimization: {
-      minimize: isProd
+      minimize: isProd,
     },
     performance: {
-      hints: false
+      hints: false,
     },
     stats: {
       colors: true,
       logging: "warn",
       children: false,
       assets: false,
-      modules: false
+      modules: false,
     },
     resolve: {
-      extensions: [".js", ".jsx", ".ts", ".tsx", ".css", ".json"]
+      extensions: [".js", ".jsx", ".ts", ".tsx", ".css", ".json"],
     },
     module: {
       rules: [
@@ -58,7 +59,7 @@ module.exports = function(env = {}, argv = {}) {
             options: {
               presets: [
                 require("@babel/preset-env"),
-                require("@babel/preset-typescript")
+                require("@babel/preset-typescript"),
               ],
               plugins: [
                 require("@babel/plugin-proposal-optional-chaining"),
@@ -99,10 +100,10 @@ module.exports = function(env = {}, argv = {}) {
               loader: "postcss-loader",
               options: {
                 ident: "postcss",
-                plugins: [autoprefixer()]
-              }
-            }
-          ]
+                plugins: [autoprefixer()],
+              },
+            },
+          ],
         },
         {
           test: /\.css$/,
@@ -111,32 +112,48 @@ module.exports = function(env = {}, argv = {}) {
         },
         {
           test: /\.svg$/,
-          loader: "svg-inline-loader"
+          loader: "svg-inline-loader",
         },
         {
           test: /\.(woff2?|ttf|eot|jpe?g|png|gif|mp4|mov|ogg|webm)(\?.*)?$/i,
-          loader: "file-loader"
-        }
-      ]
+          loader: "file-loader",
+        },
+      ],
     },
     plugins: [
       new DelWebpackPlugin({
         info: false,
-        exclude: ["jackets"]
+        include: ["*.js"],
       }),
       !isProd && new ForkTsCheckerPlugin(),
-      new CopyWebpackPlugin(["src/assets"], {
-        ignore: [".DS_Store"]
+      new CopyWebpackPlugin({
+        patterns: [
+          {
+            from: "jackets/**/*",
+            context: "src/assets",
+            globOptions: {
+              ignore: ["**/.DS_Store"],
+            },
+          },
+        ],
       }),
       new webpack.NoEmitOnErrorsPlugin(),
       new webpack.DefinePlugin({
         "process.env.NODE_ENV": JSON.stringify(
           isProd ? "production" : "development"
-        )
+        ),
+        "process.env.DATA_FILES": JSON.stringify(
+          fs.readdirSync(resolve(__dirname, "src/songs")).map((file) => ({
+            name: basename(file, ".json"),
+            display: JSON.parse(
+              fs.readFileSync(resolve(__dirname, "src/songs", file))
+            ).i18n.en.name,
+          }))
+        ),
       }),
       new MiniCssExtractPlugin({
         filename: "[name].[contenthash:5].css",
-        chunkFilename: "[id].[chunkhash:5].js"
+        chunkFilename: "[id].[chunkhash:5].js",
       }),
       new HtmlWebpackPlugin({
         title: "DDR Card Draw",
@@ -157,7 +174,7 @@ module.exports = function(env = {}, argv = {}) {
           ServiceWorker: {
             events: true
           },
-          excludes: ["../*.zip", "jackets/*"]
+          excludes: ["../*.zip", "jackets/**/*"]
         })
     ].filter(Boolean)
   };

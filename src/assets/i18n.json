@@ -1,6 +1,6 @@
 {
   "en": {
-    "dataSource": "Game Version",
+    "dataSource": "Game",
     "chartCount": "Number to draw",
     "difficultyLevel": "Difficulty range (inclusive)",
     "useWeightedDistributions": "Use Weighted Distributions",
@@ -69,9 +69,9 @@
     "updateLoading": "Installing an update...",
     "updateReady": "Update ready, refresh for the freshest code around!",
     "credits": "Credits",
-    "lastUpdate": "Songs updated {date}",
+    "lastUpdate": "Songs up to date as of {date}.",
     "about": {
-      "body": "App inspired by work from Jeff Lloyd. * Weighted distribution code contributed by Chris Chike. * Jacket images prepared by FuriousDCSL. * Japanese localization made possible by nalpan. * DRS data provided by Joseph Bowersox. * Maintained by Noah Manneschmidt.",
+      "body": "App inspired by work from Jeff Lloyd. * Weighted distribution code contributed by Chris Chike. * Jacket images prepared by FuriousDCSL. * Japanese localization made possible by nalpan. * DRS data provided by Joseph Bowersox. * SDVX data made possible by Vincent Nguyen. * Maintained by Noah Manneschmidt.",
       "header": "About this app"
     },
     "contact": {
@@ -89,7 +89,7 @@
     }
   },
   "ja": {
-    "dataSource": "バージョン",
+    "dataSource": "ゲーム",
     "chartCount": "ドロー数",
     "difficultyLevel": "レベル",
     "upperBound": "上限",
@@ -162,7 +162,7 @@
     "credits": "Credits",
     "lastUpdate": "楽曲の更新日：{date}",
     "about": {
-      "body": "App inspired by work from Jeff Lloyd. * Weighted distribution code contributed by Chris Chike. * Jacket images prepared by FuriousDCSL. * Japanese localization made possible by nalpan. * DRS data provided by Joseph Bowersox. * Maintained by Noah Manneschmidt.",
+      "body": "App inspired by work from Jeff Lloyd. * Weighted distribution code contributed by Chris Chike. * Jacket images prepared by FuriousDCSL. * Japanese localization made possible by nalpan. * DRS data provided by Joseph Bowersox. * SDVX data made possible by Vincent Nguyen. * Maintained by Noah Manneschmidt.",
       "header": "About this app"
     },
     "contact": {
