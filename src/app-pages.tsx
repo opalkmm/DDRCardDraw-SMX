@@ -3,11 +3,12 @@ import { DrawingList } from "./drawing-list";
 import { NotFoundPage } from "./non-ideal-pages";
 import { AboutPage } from "./about";
 import { GameIndexPage, SongDetail } from "./game-index-page";
+import { available } from "./hooks/useDataSets";
 
 export function AppPages() {
   return (
     <Switch>
-      <Route exact path="/credits" component={AboutPage} />
+      <Route exact path="/:dataSet/credits" component={AboutPage} />
       <Route path="/:dataSet">
         <Switch>
           <Route path="/:dataSet/song/:songIndex" component={SongDetail} />
@@ -16,7 +17,7 @@ export function AppPages() {
           <Route exact path="/:dataSet" component={GameIndexPage} />
         </Switch>
       </Route>
-      <Redirect to="/a20" />
+      <Redirect to={`/${available[0].name}`} />
     </Switch>
   );
 }

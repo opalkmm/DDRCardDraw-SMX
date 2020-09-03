@@ -30,7 +30,7 @@ export const DrawStateContext = createContext<DrawState>({
   drawSongs() {
     return false;
   },
-  gameDataFailed: false
+  gameDataFailed: false,
 });
 
 interface Props {
@@ -47,7 +47,7 @@ export class DrawStateManager extends Component<Props, DrawState> {
       drawings: [],
       dataSetName: props.dataSet || "",
       drawSongs: this.doDrawing,
-      gameDataFailed: false
+      gameDataFailed: false,
     };
   }
 
@@ -85,15 +85,38 @@ export class DrawStateManager extends Component<Props, DrawState> {
       return; // don't attempt to load an empty data set
     }
 
+    if (
+      this.state.dataSetName === dataSetName &&
+      this.state.gameData &&
+      !this.state.gameDataFailed
+    ) {
+      return; // don't bother re-loading the same data
+    }
+
     // remember current state, if good
     const prevDataSet =
       this.state.gameData &&
       !this.state.gameDataFailed &&
       this.state.dataSetName;
+
+    if (this.state.drawings.length) {
+      try {
+        await new Promise((resolve, reject) => {
+          if (confirm("This will clear all drawn songs so far. Confirm?")) {
+            resolve();
+          } else {
+            reject();
+          }
+        });
+      } catch {
+        history.back();
+        return;
+      }
+    }
     this.setState({
       fuzzySearch: null,
       dataSetName,
-      gameDataFailed: false
+      gameDataFailed: false,
     });
 
     try {
@@ -111,15 +134,16 @@ export class DrawStateManager extends Component<Props, DrawState> {
           "name_translation",
           "artist",
           "artist_translation",
-          "search_hint"
+          "search_hint",
         ],
         {
-          sort: true
+          sort: true,
         }
       );
       this.setState({
         gameData: data,
-        fuzzySearch
+        fuzzySearch,
+        drawings: [],
       });
     } catch {
       if (this.state.dataSetName !== dataSetName) {
@@ -131,7 +155,7 @@ export class DrawStateManager extends Component<Props, DrawState> {
       } else if (!this.state.gameDataFailed || this.state.dataSetName) {
         this.setState({
           gameDataFailed: true,
-          dataSetName: ""
+          dataSetName: "",
         });
       }
     }
@@ -147,8 +171,8 @@ export class DrawStateManager extends Component<Props, DrawState> {
       return false;
     }
 
-    this.setState(prevState => ({
-      drawings: [drawing, ...prevState.drawings].filter(Boolean)
+    this.setState((prevState) => ({
+      drawings: [drawing, ...prevState.drawings].filter(Boolean),
     }));
     return true;
   };

@@ -23,18 +23,17 @@ export function VersionSelect() {
   };
 
   return (
-    <Menu.Item
-      text={<FormattedMessage id="dataSource" />}
-      icon={IconNames.APPLICATIONS}
-    >
+    <>
+      <Menu.Divider title={<FormattedMessage id="dataSource" />} />
       {available.map(({ name, display }) => (
         <Menu.Item
           key={name}
           text={display}
           active={name === current.name}
           onClick={() => handleSongListChange(name)}
+          icon={name === current.name ? IconNames.SELECTION : IconNames.CIRCLE}
         />
       ))}
-    </Menu.Item>
+    </>
   );
 }
