@@ -16,14 +16,14 @@
   },
   "defaults": {
     "style": "solo",
-    "difficulties": ["wild", "hard"],
-    "flags": [],
+    "difficulties": ["hard", "wild"],
+    "flags": ["andorfineMedia", "bassmonkeys", "cappRecords", "dimaMusic"],
     "lowerLvlBound": 18,
-    "upperLvlBound": 22
+    "upperLvlBound": 25
   },
   "i18n": {
     "en": {
-      "name": "StepManiaX",
+      "name": "Hard/Wild Tournament",
       "solo": "Solo",
       "basic": "Basic",
       "easy": "Easy",
