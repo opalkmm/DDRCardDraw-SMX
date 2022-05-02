@@ -14,10 +14,17 @@ export function ApplyDefaultConfig({ defaults }: Props) {
     }
 
     update((config) => {
-      const { lowerLvlBound, upperLvlBound, flags, difficulties, style } =
-        defaults;
+      const {
+        lowerLvlBound,
+        upperLvlBound,
+        flags,
+        difficulties,
+        style,
+        chartCount,
+      } = defaults;
       return {
         ...config,
+        chartCount: chartCount || config.chartCount,
         lowerBound: lowerLvlBound,
         upperBound: upperLvlBound,
         flags: new Set(flags),

@@ -16,14 +16,15 @@
   },
   "defaults": {
     "style": "solo",
-    "difficulties": ["full"],
+    "difficulties": ["hard", "wild"],
     "flags": ["andorfineMedia", "bassmonkeys", "cappRecords", "dimaMusic"],
     "lowerLvlBound": 18,
-    "upperLvlBound": 25
+    "upperLvlBound": 25,
+    "chartCount": 9
   },
   "i18n": {
     "en": {
-      "name": "Full Tournament",
+      "name": "Singles Finals (9)",
       "solo": "Solo",
       "basic": "Basic",
       "easy": "Easy",
