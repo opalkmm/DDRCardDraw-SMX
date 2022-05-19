@@ -3,4 +3,5 @@
   padding: 10px;
   overflow: hidden;
   flex-wrap: wrap;
+  justify-content: center;
 }
