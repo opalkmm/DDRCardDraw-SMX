@@ -54,6 +54,8 @@ export interface GameData {
     lowerLvlBound: number;
     upperLvlBound: number;
     chartCount?: number;
+    useWeights: boolean;
+    weights: Array<number>
   };
   /**
    * Set of localized values for display of any styles, difficulties, or flags

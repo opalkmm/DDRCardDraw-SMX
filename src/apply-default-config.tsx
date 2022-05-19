@@ -21,6 +21,8 @@ export function ApplyDefaultConfig({ defaults }: Props) {
         difficulties,
         style,
         chartCount,
+        useWeights,
+        weights,
       } = defaults;
       return {
         ...config,
@@ -30,6 +32,8 @@ export function ApplyDefaultConfig({ defaults }: Props) {
         flags: new Set(flags),
         difficulties: new Set(difficulties),
         style,
+        useWeights,
+        weights
       };
     });
   }, [defaults, update]);

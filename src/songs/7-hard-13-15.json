@@ -20,11 +20,13 @@
     "flags": ["andorfineMedia", "bassmonkeys", "cappRecords", "dimaMusic"],
     "lowerLvlBound": 13,
     "upperLvlBound": 15,
-    "chartCount": 7
+    "chartCount": 5,
+    "useWeights": true,
+    "weights": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 1, 1]
   },
   "i18n": {
     "en": {
-      "name": "Hard Winner's Round 1 / Loser's Round 1 | (13 - 15)",
+      "name": "Hard Mode | 13 - 15",
       "solo": "Solo",
       "basic": "Basic",
       "easy": "Easy",

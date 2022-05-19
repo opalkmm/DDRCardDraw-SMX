@@ -45,6 +45,12 @@
         },
         "lvlMax": {
           "type": "integer"
+        },
+        "useWeights": {
+          "type": "boolean"
+        },
+        "weights": {
+          "type": "array"
         }
       }
     },
@@ -56,7 +62,9 @@
         "difficulties",
         "lowerLvlBound",
         "upperLvlBound",
-        "flags"
+        "flags",
+        "useWeights",
+        "weights"
       ],
       "additionalProperties": false,
       "properties": {
@@ -65,7 +73,9 @@
         "flags": { "$ref": "#/$defs/uniqueStringArr" },
         "lowerLvlBound": { "type": "integer" },
         "upperLvlBound": { "type": "integer" },
-        "chartCount": { "type": "integer" }
+        "chartCount": { "type": "integer" },
+        "useWeights": { "type": "boolean" },
+        "weights": { "type": "array" }
       }
     },
     "i18n": {
