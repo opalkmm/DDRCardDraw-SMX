@@ -16,15 +16,17 @@
   },
   "defaults": {
     "style": "solo",
-    "difficulties": ["full"],
+    "difficulties": ["wild"],
     "flags": ["andorfineMedia", "bassmonkeys", "cappRecords", "dimaMusic"],
-    "lowerLvlBound": 18,
-    "upperLvlBound": 25,
-    "chartCount": 5
+    "lowerLvlBound": 21,
+    "upperLvlBound": 23,
+    "chartCount": 7,
+    "useWeights": true,
+    "weights": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 2]
   },
   "i18n": {
     "en": {
-      "name": "Full Swiss (5)",
+      "name": "Wild Mode | 21 - 23",
       "solo": "Solo",
       "basic": "Basic",
       "easy": "Easy",

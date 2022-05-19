@@ -16,15 +16,17 @@
   },
   "defaults": {
     "style": "solo",
-    "difficulties": ["hard", "wild"],
+    "difficulties": ["wild"],
     "flags": ["andorfineMedia", "bassmonkeys", "cappRecords", "dimaMusic"],
-    "lowerLvlBound": 18,
-    "upperLvlBound": 25,
-    "chartCount": 5
+    "lowerLvlBound": 19,
+    "upperLvlBound": 21,
+    "chartCount": 7,
+    "useWeights": true,
+    "weights": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 2]
   },
   "i18n": {
     "en": {
-      "name": "Singles Swiss (5)",
+      "name": "Wild Mode | 19 - 21",
       "solo": "Solo",
       "basic": "Basic",
       "easy": "Easy",

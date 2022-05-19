@@ -16,15 +16,17 @@
   },
   "defaults": {
     "style": "solo",
-    "difficulties": ["full"],
+    "difficulties": ["hard"],
     "flags": ["andorfineMedia", "bassmonkeys", "cappRecords", "dimaMusic"],
-    "lowerLvlBound": 18,
-    "upperLvlBound": 25,
-    "chartCount": 9
+    "lowerLvlBound": 16,
+    "upperLvlBound": 18,
+    "chartCount": 7,
+    "useWeights": true,
+    "weights": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 2]
   },
   "i18n": {
     "en": {
-      "name": "Full Finals (9)",
+      "name": "Hard Mode | 16 - 18",
       "solo": "Solo",
       "basic": "Basic",
       "easy": "Easy",

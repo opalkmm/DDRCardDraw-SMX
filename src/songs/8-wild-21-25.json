@@ -16,15 +16,17 @@
   },
   "defaults": {
     "style": "solo",
-    "difficulties": ["full"],
+    "difficulties": ["wild"],
     "flags": ["andorfineMedia", "bassmonkeys", "cappRecords", "dimaMusic"],
-    "lowerLvlBound": 18,
-    "upperLvlBound": 25,
-    "chartCount": 7
+    "lowerLvlBound": 21,
+    "upperLvlBound": 28,
+    "chartCount": 13,
+    "useWeights": true,
+    "weights": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 3, 3, 2, 0, 0, 0]
   },
   "i18n": {
     "en": {
-      "name": "Full Elim (7)",
+      "name": "Wild Mode | 21 - 25",
       "solo": "Solo",
       "basic": "Basic",
       "easy": "Easy",

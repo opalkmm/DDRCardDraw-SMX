@@ -18,7 +18,7 @@ import { ThemeSyncWidget } from "./theme-toggle";
 export function App() {
   return (
     <ConfigStateManager>
-      <DrawStateManager defaultDataSet="1-single-swiss">
+      <DrawStateManager defaultDataSet="1-hard-14-16">
         <ThemeSyncWidget />
         <UpdateManager />
         <Header />
