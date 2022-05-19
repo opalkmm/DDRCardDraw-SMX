@@ -43,6 +43,8 @@ export interface GameData {
      */
     flags: string[];
     lvlMax: number;
+    useWeights?: boolean;
+    weights?: unknown[];
   };
   /**
    * Defines the default configuration for this game
@@ -55,7 +57,7 @@ export interface GameData {
     upperLvlBound: number;
     chartCount?: number;
     useWeights: boolean;
-    weights: Array<number>
+    weights: number[];
   };
   /**
    * Set of localized values for display of any styles, difficulties, or flags

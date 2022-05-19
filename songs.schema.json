@@ -75,7 +75,7 @@
         "upperLvlBound": { "type": "integer" },
         "chartCount": { "type": "integer" },
         "useWeights": { "type": "boolean" },
-        "weights": { "type": "array" }
+        "weights": { "type": "array", "items": { "type": "number" } }
       }
     },
     "i18n": {
