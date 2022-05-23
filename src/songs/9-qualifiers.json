@@ -17,12 +17,12 @@
   "defaults": {
     "style": "solo",
     "difficulties": ["hard", "wild"],
-    "flags": ["andorfineMedia", "bassmonkeys", "cappRecords", "dimaMusic"],
+    "flags": [],
     "lowerLvlBound": 17,
     "upperLvlBound": 20,
-    "chartCount": 5,
-    "useWeights": false,
-    "weights": []
+    "chartCount": 2,
+    "useWeights": true,
+    "weights": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0]
   },
   "i18n": {
     "en": {
