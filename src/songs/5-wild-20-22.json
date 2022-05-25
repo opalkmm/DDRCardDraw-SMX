@@ -17,7 +17,7 @@
   "defaults": {
     "style": "solo",
     "difficulties": ["wild"],
-    "flags": ["andorfineMedia", "bassmonkeys", "cappRecords", "dimaMusic"],
+    "flags": [],
     "lowerLvlBound": 20,
     "upperLvlBound": 22,
     "chartCount": 7,
