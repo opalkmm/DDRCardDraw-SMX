@@ -1,5 +1,6 @@
 import { Component } from "react";
 import { SongCard } from "./song-card";
+import { ProgressBar } from "@blueprintjs/core";
 import styles from "./drawn-set.css";
 import {
   Drawing,
@@ -10,6 +11,7 @@ import {
 
 const HUE_STEP = (255 / 8) * 3;
 let hue = Math.floor(Math.random() * 255);
+let turnCounter = 0;
 
 function getRandomGradiant() {
   hue += HUE_STEP;
@@ -25,13 +27,17 @@ export class DrawnSet extends Component<Props> {
 
   render() {
     const { drawing } = this.props;
+  
+    
     return (
+      <div style={{ backgroundImage: this._background }}>
       <div
         key={drawing.id}
         className={styles.chartList}
-        style={{ backgroundImage: this._background }}
       >
         {drawing.charts.map(this.renderChart)}
+        {console.log(turnCounter)}
+      </div>
       </div>
     );
   }
@@ -70,6 +76,7 @@ export class DrawnSet extends Component<Props> {
         replacedBy={pocketPick && pocketPick.player}
         replacedWith={pocketPick && pocketPick.pick}
         chart={chart}
+        turnOrder={turnCounter}
       />
     );
   };
@@ -85,6 +92,7 @@ export class DrawnSet extends Component<Props> {
       arr.splice(existingBanIndex, 1);
     } else {
       arr.push({ chartIndex, player, pick: chart! });
+      turnCounter++
     }
     this.forceUpdate();
   }

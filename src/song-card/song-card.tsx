@@ -29,6 +29,7 @@ interface Props {
   replacedBy?: Player;
   replacedWith?: DrawnChart;
   iconCallbacks?: IconCallbacks;
+  turnOrder?:number;
 }
 
 export function SongCard(props: Props) {
@@ -39,6 +40,7 @@ export function SongCard(props: Props) {
     replacedBy,
     replacedWith,
     iconCallbacks,
+    turnOrder,
   } = props;
 
   const [showingIconMenu, setShowIconMenu] = useState(false);
@@ -90,6 +92,7 @@ export function SongCard(props: Props) {
   return (
     <div
       className={rootClassname}
+      style={{order: turnOrder ? turnOrder :99}}
       onClick={
         showingIconMenu || hasLabel || pocketPickForPlayer
           ? undefined
