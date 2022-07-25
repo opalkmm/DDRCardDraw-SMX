@@ -9,8 +9,18 @@ import { Callout, NonIdealState } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
 import logo from "./assets/ddr-tools-256.png";
 
+const giveDrawnChartsIds = (drawing:Drawing) => {
+  let idCount = 0;
+  drawing.charts.map((chart) => {
+    chart.id = idCount++;
+    return chart;
+  })
+  return drawing;
+}
 const renderDrawing = (drawing: Drawing) => (
-  <DrawnSet key={drawing.id} drawing={drawing} />
+  // we want to add the id to drawnChart within drawing
+  
+  <DrawnSet key={drawing.id} drawing={giveDrawnChartsIds(drawing)} />
 );
 
 const ScrollableDrawings = memo((props: { drawings: Drawing[] }) => {
