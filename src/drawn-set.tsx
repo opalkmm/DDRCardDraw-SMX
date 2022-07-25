@@ -86,6 +86,9 @@ export class DrawnSet extends Component<Props> {
     } else {
       arr.push({ chartIndex, player, pick: chart! });
     }
+    const shiftedChart: DrawnChart = this.props.drawing.charts[chartIndex];
+    this.props.drawing.charts.splice(chartIndex, 1);	    this.props.drawing.charts.splice(chartIndex, 1);
+    this.props.drawing.charts.unshift(shiftedChart);	    this.props.drawing.charts.unshift(shiftedChart);
     this.forceUpdate();
   }
 
