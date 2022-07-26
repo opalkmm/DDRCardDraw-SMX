@@ -37,7 +37,7 @@ export class DrawnSet extends Component<Props> {
   }
 
   renderChart = (chart: DrawnChart, index: number) => {
-    const veto = this.props.drawing.bans.find((b) => b.chartIndex === index);
+    const veto = this.props.drawing.bans.find((b) => b.chartId === chart.id);
     const protect = this.props.drawing.protects.find(
       (b) => b.chartIndex === index
     );
@@ -51,7 +51,7 @@ export class DrawnSet extends Component<Props> {
           onVeto: this.handleBanProtectReplace.bind(
             this,
             this.props.drawing.bans,
-            index
+            chart.id as number,
           ),
           onProtect: this.handleBanProtectReplace.bind(
             this,
@@ -63,7 +63,7 @@ export class DrawnSet extends Component<Props> {
             this.props.drawing.pocketPicks,
             index
           ),
-          onReset: this.handleReset.bind(this, index),
+          onReset: this.handleReset.bind(this, index, chart.id as number),
         }}
         vetoedBy={veto && veto.player}
         protectedBy={protect && protect.player}
@@ -78,23 +78,25 @@ export class DrawnSet extends Component<Props> {
     arr: Array<PlayerActionOnChart> | Array<PocketPick>,
     chartIndex: number,
     player: 1 | 2,
-    chart?: DrawnChart
+    chart?: DrawnChart,
+    chartId?: number
   ) {
-    const existingBanIndex = arr.findIndex((b) => b.chartIndex === chartIndex);
+    const existingBanIndex = arr.findIndex((b) => b.chartId === chart?.id);
     if (existingBanIndex >= 0) {
       arr.splice(existingBanIndex, 1);
     } else {
       arr.push({ chartIndex, player, pick: chart! });
     }
+    // have to get the chart by its id instead of its index
     const shiftedChart: DrawnChart = this.props.drawing.charts[chartIndex];
-    this.props.drawing.charts.splice(chartIndex, 1);	    this.props.drawing.charts.splice(chartIndex, 1);
-    this.props.drawing.charts.unshift(shiftedChart);	    this.props.drawing.charts.unshift(shiftedChart);
+    this.props.drawing.charts.splice(chartIndex, 1);
+    this.props.drawing.charts.unshift(shiftedChart);
     this.forceUpdate();
   }
 
-  handleReset(chartIndex: number) {
+  handleReset(chartIndex: number, chartId: number) {
     const drawing = this.props.drawing;
-    drawing.bans = drawing.bans.filter((p) => p.chartIndex !== chartIndex);
+    drawing.bans = drawing.bans.filter((p) => p.chartId !== chartId);
     drawing.protects = drawing.protects.filter(
       (p) => p.chartIndex !== chartIndex
     );
