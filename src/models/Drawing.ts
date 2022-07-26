@@ -18,12 +18,13 @@ export interface DrawnChart {
 export interface PlayerActionOnChart {
   player: 1 | 2;
   // TODO remove chartIndex when proven
-  chartIndex: number;
+  chartIndex?: number;
   chartId?: number;
 }
 
 export interface PocketPick extends PlayerActionOnChart {
   pick: DrawnChart;
+  chartId?: number;
 }
 
 export interface Drawing {

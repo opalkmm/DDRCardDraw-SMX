@@ -16,8 +16,8 @@ const isJapanese = detectedLanguage === "ja";
 type Player = 1 | 2;
 
 interface IconCallbacks {
-  onVeto: (p: Player) => void;
-  onProtect: (p: Player) => void;
+  onVeto: (p: Player, chart: DrawnChart) => void;
+  onProtect: (p: Player, chart: DrawnChart) => void;
   onReplace: (p: Player, chart: DrawnChart) => void;
   onReset: () => void;
 }
@@ -57,6 +57,7 @@ export function SongCard(props: Props) {
     level,
     hasShock,
     jacket,
+    id
   } = replacedWith || chart;
   const diffAccentColor = useDifficultyColor(difficultyClass);
 

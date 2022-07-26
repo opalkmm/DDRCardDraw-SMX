@@ -49,19 +49,20 @@ export class DrawnSet extends Component<Props> {
         key={index}
         iconCallbacks={{
           onVeto: this.handleBanProtectReplace.bind(
-            this,
-            this.props.drawing.bans,
-            chart.id as number,
+            this, // always this
+            this.props.drawing.bans, // array to work with
+            chart.id as number, // first argument defined below
           ),
           onProtect: this.handleBanProtectReplace.bind(
             this,
             this.props.drawing.protects,
-            index
+            chart.id as number,
           ),
           onReplace: this.handleBanProtectReplace.bind(
             this,
             this.props.drawing.pocketPicks,
-            index
+            chart.id as number,
+            // index
           ),
           onReset: this.handleReset.bind(this, index, chart.id as number),
         }}
@@ -76,20 +77,33 @@ export class DrawnSet extends Component<Props> {
 
   handleBanProtectReplace(
     arr: Array<PlayerActionOnChart> | Array<PocketPick>,
-    chartIndex: number,
+    // chartIndex: number,
+    chartId: number,
     player: 1 | 2,
-    chart?: DrawnChart,
-    chartId?: number
+    chart: DrawnChart,
+    
   ) {
     const existingBanIndex = arr.findIndex((b) => b.chartId === chart?.id);
     if (existingBanIndex >= 0) {
+      // why do we do this
       arr.splice(existingBanIndex, 1);
     } else {
-      arr.push({ chartIndex, player, pick: chart! });
+      arr.push({ player, pick: chart!, chartId: chart?.id });
     }
     // have to get the chart by its id instead of its index
-    const shiftedChart: DrawnChart = this.props.drawing.charts[chartIndex];
-    this.props.drawing.charts.splice(chartIndex, 1);
+    let shiftedChart:DrawnChart = this.props.drawing.charts[0];
+    if (!!chartId) {
+      shiftedChart = this.props.drawing.charts.find(chart => chart.id === chartId) as DrawnChart;
+    } 
+    // else if (!chartId) {
+    //   shiftedChart = this.props.drawing.charts[chartIndex];
+    // }
+    if (!!chartId) {
+      const indexToCut = this.props.drawing.charts.indexOf(shiftedChart);
+      this.props.drawing.charts.splice(indexToCut, 1);
+    } else {
+      // this.props.drawing.charts.splice(chartIndex, 1);
+    }
     this.props.drawing.charts.unshift(shiftedChart);
     this.forceUpdate();
   }
