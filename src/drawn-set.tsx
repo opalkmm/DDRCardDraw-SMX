@@ -38,7 +38,6 @@ export class DrawnSet extends Component<Props> {
 
   renderChart = (chart: DrawnChart, index: number) => {
     const veto = this.props.drawing.bans.find((b) => b.chartId === chart.id);
-    // TODO modify the rest - right now just doing VETO
     const protect = this.props.drawing.protects.find(
       (b) => b.chartId === chart.id
     );
@@ -64,8 +63,7 @@ export class DrawnSet extends Component<Props> {
             this.props.drawing.pocketPicks,
             chart.id as number
           ),
-          // TODO find and make sure this works below
-          onReset: this.handleReset.bind(this, index),
+          onReset: this.handleReset.bind(this, chart.id as number),
         }}
         vetoedBy={veto && veto.player}
         protectedBy={protect && protect.player}
@@ -75,7 +73,8 @@ export class DrawnSet extends Component<Props> {
       />
     );
   };
-  newHandleBanProtectReplace(
+
+  handleBanProtectReplace(
     arr: Array<PlayerActionOnChart> | Array<PocketPick>,
     chartId: number,
     player: 1 | 2,
@@ -84,28 +83,16 @@ export class DrawnSet extends Component<Props> {
     const existingBanIndex = arr.findIndex((b) => b.chartId === chart?.id);
     if (existingBanIndex >= 0) {
       arr.splice(existingBanIndex, 1);
-      // not sure if above should be removed or not?
     } else {
       arr.push({ player, pick: chart!, chartId });
     }
+
+    if(arr !== this.props.drawing.bans && this.props.drawing.orderByPocketPick){
     const shiftedChart = this.props.drawing.charts.find(chart => chart.id === chartId) as DrawnChart;
     const indexToCut = this.props.drawing.charts.indexOf(shiftedChart);
+    
     this.props.drawing.charts.splice(indexToCut, 1);
     this.props.drawing.charts.unshift(shiftedChart);
-    this.forceUpdate();
-  }
-  
-  handleBanProtectReplace(
-    arr: Array<PlayerActionOnChart> | Array<PocketPick>,
-    chartIndex: number,
-    player: 1 | 2,
-    chart?: DrawnChart
-  ) {
-    const existingBanIndex = arr.findIndex((b) => b.chartIndex === chartIndex);
-    if (existingBanIndex >= 0) {
-      arr.splice(existingBanIndex, 1);
-    } else {
-      arr.push({ chartIndex, player, pick: chart! });
     }
     const shiftedChart: DrawnChart = this.props.drawing.charts[chartIndex];
     this.props.drawing.charts.splice(chartIndex, 1);	    
@@ -113,15 +100,14 @@ export class DrawnSet extends Component<Props> {
     this.forceUpdate();
   }
 
-  // TODO make sure to modify handleReset() as necessary
-  handleReset(chartIndex: number) {
+  handleReset(chartId: number) {
     const drawing = this.props.drawing;
-    drawing.bans = drawing.bans.filter((p) => p.chartIndex !== chartIndex);
+    drawing.bans = drawing.bans.filter((p) => p.chartId !== chartId);
     drawing.protects = drawing.protects.filter(
-      (p) => p.chartIndex !== chartIndex
+      (p) => p.chartId !== chartId
     );
     drawing.pocketPicks = drawing.pocketPicks.filter(
-      (p) => p.chartIndex !== chartIndex
+      (p) => p.chartId !== chartId
     );
     this.forceUpdate();
   }

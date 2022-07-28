@@ -17,9 +17,8 @@ const giveDrawnChartsIds = (drawing:Drawing) => {
   })
   return drawing;
 }
-const renderDrawing = (drawing: Drawing) => (
-  // we want to add the id to drawnChart within drawing
-  
+
+const renderDrawing = (drawing: Drawing) => (  
   <DrawnSet key={drawing.id} drawing={giveDrawnChartsIds(drawing)} />
 );
 
@@ -30,6 +29,10 @@ const ScrollableDrawings = memo((props: { drawings: Drawing[] }) => {
 export function DrawingList() {
   const { drawings } = useContext(DrawStateContext);
   const configState = useContext(ConfigStateContext);
+  const flagsArr = Array.from(configState.flags);
+  const orderByPocketPick = flagsArr.includes("orderByPocketPick");
+  drawings.map(drawing => drawing.orderByPocketPick = orderByPocketPick);
+
   if (configState.showPool) {
     return <EligibleChartsList />;
   }

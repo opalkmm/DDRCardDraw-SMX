@@ -17,9 +17,7 @@ export interface DrawnChart {
 
 export interface PlayerActionOnChart {
   player: 1 | 2;
-  // TODO remove chartIndex when proven
-  chartIndex?: number;
-  chartId?: number;
+  chartId: number;
 }
 
 export interface PocketPick extends PlayerActionOnChart {
@@ -33,4 +31,5 @@ export interface Drawing {
   bans: Array<PlayerActionOnChart>;
   protects: Array<PlayerActionOnChart>;
   pocketPicks: Array<PocketPick>;
+  orderByPocketPick?: boolean;
 }
