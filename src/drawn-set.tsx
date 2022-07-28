@@ -48,17 +48,17 @@ export class DrawnSet extends Component<Props> {
       <SongCard
         key={index}
         iconCallbacks={{
-          onVeto: this.handleBanProtectReplace.bind(
+          onVeto: this.newHandleBanProtectReplace.bind(
             this,
             this.props.drawing.bans,
             chart.id as number,
           ),
-          onProtect: this.handleBanProtectReplace.bind(
+          onProtect: this.newHandleBanProtectReplace.bind(
             this,
             this.props.drawing.protects,
             chart.id as number
           ),
-          onReplace: this.handleBanProtectReplace.bind(
+          onReplace: this.newHandleBanProtectReplace.bind(
             this,
             this.props.drawing.pocketPicks,
             chart.id as number
@@ -92,10 +92,22 @@ export class DrawnSet extends Component<Props> {
     
     this.props.drawing.charts.splice(indexToCut, 1);
     this.props.drawing.charts.unshift(shiftedChart);
+
     }
+
+    if(arr !== this.props.drawing.bans && this.props.drawing.orderByPocketPick){
+    const shiftedChart = this.props.drawing.charts.find(chart => chart.id === chartId) as DrawnChart;
+    const indexToCut = this.props.drawing.charts.indexOf(shiftedChart);
+    
+    this.props.drawing.charts.splice(indexToCut, 1);
+    this.props.drawing.charts.unshift(shiftedChart);
+    }
+    const shiftedChart: DrawnChart = this.props.drawing.charts[chartIndex];
+    this.props.drawing.charts.splice(chartIndex, 1);	    
+    this.props.drawing.charts.unshift(shiftedChart);
     this.forceUpdate();
   }
-  
+
   handleReset(chartId: number) {
     const drawing = this.props.drawing;
     drawing.bans = drawing.bans.filter((p) => p.chartId !== chartId);

@@ -17,6 +17,7 @@ const giveDrawnChartsIds = (drawing:Drawing) => {
   })
   return drawing;
 }
+
 const renderDrawing = (drawing: Drawing) => (  
   <DrawnSet key={drawing.id} drawing={giveDrawnChartsIds(drawing)} />
 );
