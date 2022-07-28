@@ -22,6 +22,7 @@ export interface PlayerActionOnChart {
 
 export interface PocketPick extends PlayerActionOnChart {
   pick: DrawnChart;
+  chartId?: number;
 }
 
 export interface Drawing {
